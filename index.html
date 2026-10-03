@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TapFin | AI-Powered EV Data Intelligence Platform</title>
+<style>
+  /* Placeholder brand values — swap for TapFin's exact hex codes */
+  :root{
+    --bg-dark:#070b16;
+    --primary:#2ee6a6;      /* [TAPFIN_PRIMARY_HEX] */
+    --secondary:#5b8cff;    /* [TAPFIN_SECONDARY_HEX] */
+    --line:rgba(255,255,255,.25);
+    --faint:rgba(255,255,255,.12);
+    --text:#eef2fa;
+    --muted:#9aa6bf;
+    --ease:cubic-bezier(.45,0,.55,1);
+  }
+  *{box-sizing:border-box;margin:0}
+  body{background:#02040a;color:var(--text);font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh;display:flex;flex-direction:column}
+
+  /* Preview toolbar */
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:center;padding:12px 16px;border-bottom:1px solid var(--faint);background:#04070f;position:sticky;top:0;z-index:10}
+  .toolbar .label{font-size:12px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;margin-right:4px}
+  .toolbar button{font:inherit;font-size:13px;color:var(--text);background:transparent;border:1px solid var(--faint);border-radius:999px;padding:7px 14px;cursor:pointer;transition:border-color .2s,background .2s}
+  .toolbar button:hover{border-color:var(--line)}
+  .toolbar button[aria-pressed="true"]{border-color:var(--primary);background:rgba(46,230,166,.1)}
+  .toolbar .replay{border-color:var(--primary);color:var(--primary)}
+  .toolbar .sep{width:1px;height:20px;background:var(--faint)}
+
+  .stage{flex:1;display:flex;justify-content:center;align-items:flex-start;padding:24px 12px 48px;background:radial-gradient(circle at 50% 0,#0a1226,#02040a 70%)}
+  .frame{width:100%;max-width:1280px;container-type:inline-size;transition:width .5s var(--ease),max-width .5s var(--ease);border:1px solid var(--faint);border-radius:14px;overflow:hidden;background:var(--bg-dark)}
+  .frame[data-device="tablet"]{max-width:768px}
+  .frame[data-device="mobile"]{max-width:390px}
+
+  /* Hero */
+  .hero{position:relative;padding:20px clamp(16px,4cqw,56px) 56px;overflow:hidden;
+    background:radial-gradient(ellipse at 50% 62%,rgba(46,230,166,.07),transparent 55%),var(--bg-dark)}
+  .hero::before{content:"";position:absolute;inset:0;background-image:radial-gradient(var(--faint) 1px,transparent 1px);background-size:28px 28px;mask-image:radial-gradient(ellipse at 50% 50%,#000,transparent 75%);-webkit-mask-image:radial-gradient(ellipse at 50% 50%,#000,transparent 75%);pointer-events:none}
+  nav{position:relative;display:flex;justify-content:space-between;align-items:center;padding:8px 0 40px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:20px;letter-spacing:.01em}
+  .logo svg{width:26px;height:26px}
+  .navlinks{display:flex;gap:28px;font-size:14px;color:var(--muted)}
+  @container (max-width:700px){.navlinks{display:none}}
+  .btn{display:inline-block;font:inherit;font-size:15px;font-weight:600;color:#04120d;background:var(--primary);border:0;border-radius:10px;padding:13px 24px;cursor:pointer;text-decoration:none;box-shadow:0 0 28px rgba(46,230,166,.28);transition:transform .2s,box-shadow .2s}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 0 38px rgba(46,230,166,.45)}
+  nav .btn{padding:9px 18px;font-size:14px}
+
+  .copy{position:relative;text-align:center;max-width:820px;margin:0 auto 28px}
+  .eyebrow{display:inline-block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--primary);border:1px solid var(--faint);border-radius:999px;padding:6px 14px;margin-bottom:20px}
+  h1{font-size:clamp(30px,5.6cqw,60px);line-height:1.08;letter-spacing:-.02em;font-weight:700}
+  h1 em{font-style:normal;background:linear-gradient(90deg,var(--primary),var(--secondary));-webkit-background-clip:text;background-clip:text;color:transparent}
+  .copy p{margin:18px auto 0;max-width:640px;color:var(--muted);font-size:clamp(15px,1.8cqw,18px);line-height:1.6}
+  .cta{margin-top:30px;opacity:0;transform:translateY(8px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+  .cta.show{opacity:1;transform:none}
+
+  /* Illustration */
+  .viz{position:relative;width:100%;max-width:1000px;margin:0 auto}
+  .viz svg{display:block;width:100%;height:auto;overflow:visible}
+  .viz text{font-family:inherit;fill:var(--text)}
+  .icon{fill:none;stroke:var(--secondary);stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+  .tile{fill:rgba(255,255,255,.03);stroke:var(--faint);stroke-width:1}
+
+  .src{opacity:0;transition:opacity .8s var(--ease)}
+  .src.on{opacity:1}
+  .src .float{animation:drift 3.4s ease-in-out infinite alternate}
+  .src.settled .float{animation:none;transition:transform .8s var(--ease)}
+  .src:nth-child(2) .float{animation-delay:-.8s;animation-duration:3.9s}
+  .src:nth-child(3) .float{animation-delay:-1.6s;animation-duration:3.1s}
+  .src:nth-child(4) .float{animation-delay:-2.2s;animation-duration:4.2s}
+  @keyframes drift{from{transform:translate(-6px,5px)}to{transform:translate(7px,-7px)}}
+
+  .wire{fill:none;stroke:var(--line);stroke-width:1.2;stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset .8s var(--ease)}
+  .wire.draw{stroke-dashoffset:0}
+  .wire.out{stroke:var(--primary);opacity:.8}
+  .arrow{fill:var(--line);opacity:0;transition:opacity .3s .6s}
+  .arrow.draw{opacity:1}
+
+  .core{opacity:0;transition:opacity .8s var(--ease)}
+  .core.on{opacity:1}
+  .hexwrap{transform-box:fill-box;transform-origin:center}
+  .core.pulse .hexwrap{animation:pulse .9s var(--ease) 1}
+  @keyframes pulse{50%{transform:scale(1.12)}}
+  .hex{fill:rgba(46,230,166,.1);stroke:var(--primary);stroke-width:2}
+  .glow{fill:var(--primary);opacity:.22;filter:blur(26px)}
+
+  .card{opacity:.45;transition:opacity .6s var(--ease)}
+  .card rect{fill:rgba(255,255,255,.04);stroke:var(--faint);stroke-width:1;transition:stroke .6s var(--ease),fill .6s var(--ease)}
+  .card.lit{opacity:1}
+  .card.lit rect{stroke:var(--primary);fill:rgba(46,230,166,.08)}
+  .card .dot{fill:var(--primary)}
+
+  .travel{fill:var(--primary);opacity:0}
+  .flow .travel{opacity:1}
+
+  /* Mobile illustration labels need to stay legible */
+  @container (max-width:520px){
+    .hero{padding-bottom:36px}
+    .viz svg text{font-size:30px!important}
+    .viz svg #core text{font-size:28px!important}
+    .viz svg .card text{font-weight:600}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar" role="toolbar" aria-label="Hero preview controls">
+  <span class="label">Preview</span>
+  <button data-device="desktop" aria-pressed="true">Desktop</button>
+  <button data-device="tablet" aria-pressed="false">Tablet</button>
+  <button data-device="mobile" aria-pressed="false">Mobile</button>
+  <span class="sep"></span>
+  <button class="replay" id="replay">↻ Replay animation</button>
+  <button id="static" aria-pressed="false">Static final state</button>
+</div>
+
+<main class="stage">
+  <div class="frame" id="frame" data-device="desktop">
+    <section class="hero" id="hero">
+      <nav>
+        <div class="logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#2ee6a6" stroke-width="1.8" stroke-linejoin="round"><path d="M12 2l8.5 5v10L12 22l-8.5-5V7z"/><circle cx="12" cy="12" r="2.6" fill="#2ee6a6" stroke="none"/></svg>
+          TapFin
+        </div>
+        <div class="navlinks"><span>FleetForce</span><span>Xchange</span><span>About</span><span>News</span></div>
+        <a class="btn" href="#demo">Book a Demo</a>
+      </nav>
+
+      <div class="copy">
+        <span class="eyebrow">EV Data Intelligence</span>
+        <h1>TapFin: <em>AI-Powered</em> EV Data Intelligence Platform</h1>
+        <p>Raw EV data goes in. Intelligence for Lenders, OEMs, Operators and the sustainability ecosystem comes out.</p>
+        <div class="cta" id="cta"><a class="btn" href="#demo">Book a Demo</a></div>
+      </div>
+
+      <div class="viz">
+        <svg viewBox="0 0 1000 400" role="img" aria-label="Raw EV data (vehicle, battery, location, telemetry) flows into the TapFin core, which delivers intelligence to Lenders, OEMs, Operators and Sustainability.">
+          <!-- wires in: icon -> core -->
+          <g id="wiresIn">
+            <path class="wire" pathLength="1" d="M140 70 C260 70 330 190 405 200"/>
+            <path class="wire" pathLength="1" d="M95 160 C230 160 320 195 405 200"/>
+            <path class="wire" pathLength="1" d="M120 250 C240 250 330 210 405 202"/>
+            <path class="wire" pathLength="1" d="M165 335 C270 335 330 215 405 205"/>
+          </g>
+          <!-- wires out: core -> cards -->
+          <g id="wiresOut">
+            <path class="wire out" pathLength="1" d="M555 195 C620 195 640 60 700 60"/>
+            <path class="wire out" pathLength="1" d="M555 198 C620 198 640 150 700 150"/>
+            <path class="wire out" pathLength="1" d="M555 202 C620 202 640 250 700 250"/>
+            <path class="wire out" pathLength="1" d="M555 205 C620 205 640 340 700 340"/>
+          </g>
+
+          <!-- source icons -->
+          <g id="sources">
+            <g class="src" transform="translate(60,45)"><g class="float">
+              <rect class="tile" width="80" height="50" rx="12" x="0" y="0"/>
+              <g class="icon" transform="translate(16,10)"><path d="M3 24h42M7 24l4-10a3 3 0 0 1 3-2h20a3 3 0 0 1 3 2l4 10M7 24v5h6v-5M35 24v5h6v-5"/><circle cx="15" cy="19" r=".6"/><circle cx="33" cy="19" r=".6"/></g>
+            </g></g>
+            <g class="src" transform="translate(30,135)"><g class="float">
+              <rect class="tile" width="65" height="50" rx="12"/>
+              <g class="icon" transform="translate(15,13)"><rect x="2" y="5" width="30" height="16" rx="3"/><path d="M34 10v6M9 10v6M15 10v6"/></g>
+            </g></g>
+            <g class="src" transform="translate(60,225)"><g class="float">
+              <rect class="tile" width="60" height="50" rx="12"/>
+              <g class="icon" transform="translate(16,8)"><path d="M14 32s11-9 11-18a11 11 0 0 0-22 0c0 9 11 18 11 18z"/><circle cx="14" cy="14" r="4"/></g>
+            </g></g>
+            <g class="src" transform="translate(105,310)"><g class="float">
+              <rect class="tile" width="60" height="50" rx="12"/>
+              <g class="icon" transform="translate(13,13)"><path d="M17 12a5 5 0 1 1 .01 0M8 5a12 12 0 0 0 0 16M26 5a12 12 0 0 1 0 16M3 1a18 18 0 0 0 0 24M31 1a18 18 0 0 1 0 24" transform="translate(0,0)"/></g>
+            </g></g>
+          </g>
+
+          <!-- core -->
+          <g class="core" id="core">
+            <circle class="glow" cx="480" cy="200" r="70"/>
+            <g class="hexwrap">
+              <polygon class="hex" points="480,125 545,162 545,238 480,275 415,238 415,162"/>
+            </g>
+            <text x="480" y="206" text-anchor="middle" font-size="19" font-weight="700">TapFin</text>
+          </g>
+
+          <!-- cards -->
+          <g id="cards">
+            <g class="card"><rect x="700" y="30" width="270" height="62" rx="14"/><circle class="dot" cx="728" cy="61" r="4"/><text x="750" y="67" font-size="18" font-weight="600">Lenders</text></g>
+            <g class="card"><rect x="700" y="120" width="270" height="62" rx="14"/><circle class="dot" cx="728" cy="151" r="4"/><text x="750" y="157" font-size="18" font-weight="600">OEMs</text></g>
+            <g class="card"><rect x="700" y="220" width="270" height="62" rx="14"/><circle class="dot" cx="728" cy="251" r="4"/><text x="750" y="257" font-size="18" font-weight="600">Operators</text></g>
+            <g class="card"><rect x="700" y="310" width="270" height="62" rx="14"/><circle class="dot" cx="728" cy="341" r="4"/><text x="750" y="347" font-size="18" font-weight="600">Sustainability</text></g>
+          </g>
+        </svg>
+      </div>
+    </section>
+  </div>
+</main>
+
+<script>
+(function(){
+  var $ = function(s,r){return (r||document).querySelector(s)};
+  var $$ = function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var srcs=$$('.src'), wIn=$$('#wiresIn .wire'), wOut=$$('#wiresOut .wire'),
+      core=$('#core'), cards=$$('.card'), cta=$('#cta');
+  var timers=[], forceStatic=false;
+  var reduce=window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  function at(ms,fn){timers.push(setTimeout(fn,ms))}
+  function clear(){timers.forEach(clearTimeout);timers=[]}
+
+  function reset(){
+    srcs.forEach(function(e){e.classList.remove('on')});
+    wIn.concat(wOut).forEach(function(e){e.classList.remove('draw')});
+    core.classList.remove('on','pulse');
+    cards.forEach(function(e){e.classList.remove('lit')});
+    cta.classList.remove('show');
+  }
+  function finalState(){
+    srcs.forEach(function(e){e.classList.add('on')});
+    wIn.concat(wOut).forEach(function(e){e.classList.add('draw')});
+    core.classList.add('on');
+    cards.forEach(function(e){e.classList.add('lit')});
+    cta.classList.add('show');
+  }
+  function play(){
+    clear(); reset();
+    if(forceStatic||reduce.matches){finalState();return}
+    void document.body.offsetWidth;
+    at(50,function(){srcs.forEach(function(e){e.classList.add('on')})});   // scattered, drifting ~1s
+    at(1100,function(){core.classList.add('on');wIn.forEach(function(e,i){setTimeout(function(){e.classList.add('draw')},i*120)})});
+    at(2400,function(){core.classList.add('pulse')});                       // pulses once
+    at(3400,function(){wOut.forEach(function(e){e.classList.add('draw')})});
+    cards.forEach(function(c,i){at(4300+i*300,function(){c.classList.add('lit')})}); // 300ms stagger
+    at(5800,function(){cta.classList.add('show')});                         // button last
+  }
+
+  $('#replay').addEventListener('click',function(){
+    forceStatic=false; $('#static').setAttribute('aria-pressed','false'); play();
+  });
+  $('#static').addEventListener('click',function(){
+    forceStatic=!forceStatic; this.setAttribute('aria-pressed',String(forceStatic)); play();
+  });
+  $$('[data-device]',$('.toolbar')).forEach(function(b){
+    b.addEventListener('click',function(){
+      $$('[data-device]',$('.toolbar')).forEach(function(x){x.setAttribute('aria-pressed','false')});
+      b.setAttribute('aria-pressed','true');
+      $('#frame').setAttribute('data-device',b.getAttribute('data-device'));
+    });
+  });
+
+  play();
+})();
+</script>
+</body>
+</html>
