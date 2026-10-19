@@ -11,6 +11,8 @@ npx http-server razorpay-vulcan -p 8765 -c-1
 # open http://localhost:8765/
 ```
 
+To look at it without a server, open `preview/razorpay-vulcan-preview.html`. It's a single self-contained file with the CSS, JS and vendored libraries inlined, so it runs from disk (`file://`). `preview/vulcan-frames.png` is a contact sheet of stills.
+
 Three.js r160 and Lenis 1.1.20 are vendored in `vendor/` (MIT, licences included). Only the Google Fonts stylesheet (Instrument Serif and Inter Tight, the same fonts the reference uses) and the Typeform embed load from the network.
 
 ## Structure
