@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Magnam Studio</title>
+  <meta name="description" content="A paper-textured editorial portfolio template with condensed display type, smooth scrolling and torn-paper page transitions. All copy is placeholder text.">
+  <meta name="theme-color" content="#1d1d1b">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%231d1d1b'/%3E%3Cpath d='M9 24V8h4l6 11V8h4v16h-4l-6-11v11z' fill='%23cdc6be'/%3E%3C/svg%3E">
+  <script>try{if(innerWidth>=992&&!matchMedia("(prefers-reduced-motion: reduce)").matches&&!sessionStorage.getItem("pp:arrive"))document.documentElement.classList.add("intro")}catch(e){}</script>
+  <script type="module" src="/src/main.js"></script>
+</head>
+<body class="body index" data-page="index">
+
+  <!-- Curtain under the page (used when arriving from another page) -->
+  <div class="gl-canvas below"><canvas id="below-canvas"></canvas></div>
+
+  <div class="rotate"><div class="rotate-desc">Please rotate your device<br>to ensure a better experience.</div></div>
+
+  <div class="stage" id="stage">
+  <main id="app" class="app" data-scroll-container>
+
+    <div class="paper-background" aria-hidden="true"></div>
+
+    <!-- ============ NAV ============ -->
+    <nav class="nav default" data-scroll data-scroll-sticky data-scroll-target="#app" aria-label="Main">
+      <div class="gl-canvas"><canvas id="above-canvas"></canvas></div>
+      <div class="nav-inner">
+        <div class="paper-background" aria-hidden="true"></div>
+        <div class="nav-block l"><div class="n-text">City, XX</div></div>
+        <a class="nav-head w--current" href="./" data-color="#1d1d1b" aria-label="Magnam Studio — Home">
+          <span class="nav-img dark logo-mark">Magnam Studio</span>
+          <span class="nav-img light logo-mark">Magnam Studio</span>
+        </a>
+        <div class="nav-block r">
+          <button class="nav-link" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu">
+            <span class="nav-lines"><span class="nav-line up"></span><span class="nav-line bottom"></span></span>
+          </button>
+        </div>
+      </div>
+
+      <div class="menu" id="menu">
+        <div class="menu-w">
+          <a class="menu-link m1 w--current" href="./" data-color="#cdc6be" aria-label="Index" aria-current="page">
+            <h2 class="menu-title m1 cx i">Index</h2><div class="m-active"></div>
+          </a>
+          <a class="menu-link m2" href="work.html" data-color="#cdc6be" aria-label="Work">
+            <h2 class="menu-title m2 cx i"><span class="f-span">W</span>ork</h2><div class="m-active"></div>
+          </a>
+          <a class="menu-link m3" href="about.html" data-color="#cdc6be" aria-label="About">
+            <h2 class="menu-title m3 cx i">Ab<span class="f-span">o</span>ut</h2><div class="m-active"></div>
+          </a>
+        </div>
+        <div class="f-block li">
+          <a class="f-li new-tab w" href="#" target="_blank" rel="noopener">twitter</a><span class="f-li ci w">·</span>
+          <a class="f-li new-tab w" href="#" target="_blank" rel="noopener">insta<span class="f-span">g</span>ram</a><span class="f-li ci w">·</span>
+          <a class="f-li new-tab w" href="#" target="_blank" rel="noopener">dribbble</a><span class="f-li ci w">·</span>
+          <a class="f-li new-tab w" href="#" target="_blank" rel="noopener">behan<span class="f-span">c</span>e</a>
+        </div>
+      </div>
+      <div class="menu-line"><div class="menu-face"></div><div class="menu-side"></div></div>
+    </nav>
+
+    <!-- ============ FEATURED STRIP (draggable) ============ -->
+    <header class="sidebar init">
+      <div class="s-container" data-drag-strip>
+        <div class="s-inner" data-drag-inner>
+
+          <div class="s-grid"><div class="s-block">
+            <article class="item l"><a class="item-link" href="work.html" data-color="#1d1d1b" draggable="false">
+              <div class="item-img-w"><div class="item-img ph ph-slate" data-ph="Image"></div></div>
+              <div class="item-block"><div class="item-tw"><h3 class="item-t cx i">Lorem <span class="sep">|</span> Ipsum</h3></div>
+                <p class="item-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p></div>
+            </a></article>
+            <article class="item l"><a class="item-link" href="work.html" data-color="#1d1d1b" draggable="false">
+              <div class="item-img-w"><div class="item-img ph ph-sand" data-ph="Image"></div></div>
+              <div class="item-block"><div class="item-tw"><h3 class="item-t cx i">Dolor Sit</h3></div>
+                <p class="item-desc">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p></div>
+            </a></article>
+            <article class="item l"><a class="item-link" href="work.html" data-color="#1d1d1b" draggable="false">
+              <div class="item-img-w"><div class="item-img ph ph-brown" data-ph="Image"></div></div>
+              <div class="item-block"><div class="item-tw"><h3 class="item-t cx i">Amet Co.</h3><span class="new-w-2 sp"><span class="new-2 cx i">New</span></span></div>
+                <p class="item-desc">Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p></div>
+            </a></article>
+          </div></div>
+
+          <div class="headline m">
+            <a class="head-wrap" href="work.html" data-color="#1d1d1b" draggable="false">
+              <div class="head-title cx i">All <span class="bef">W</span><span class="dom">o</span>rk!</div>
+              <div class="head-embed" aria-hidden="true">
+                <svg id="headline" viewBox="0 0 500 146" preserveAspectRatio="none"><ellipse class="head doodle-hover" cx="250" cy="72.9" rx="242.4" ry="68.5"/></svg>
+              </div>
+            </a>
+            <div class="head-desc">Lorem ipsum dolor<br>sit amet consectetur —<br>adipiscing elit sed.</div>
+            <div class="head-caption"><div class="item-title cap cx i">Tip!</div><div class="item-desc cap">Drag sideways to navigate</div></div>
+          </div>
+
+          <div class="s-grid"><div class="s-block">
+            <article class="item l"><a class="item-link" href="work.html" data-color="#1d1d1b" draggable="false">
+              <div class="item-img-w"><div class="item-img ph ph-blue" data-ph="Image"></div></div>
+              <div class="item-block"><div class="item-tw"><h3 class="item-t cx i">Consec Tetur</h3><span class="new-w-2 sp"><span class="new-2 cx i">New</span></span></div>
+                <p class="item-desc">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p></div>
+            </a></article>
+            <article class="item l"><a class="item-link" href="work.html" data-color="#1d1d1b" draggable="false">
+              <div class="item-img-w"><div class="item-img ph ph-ink" data-ph="Image"></div></div>
+              <div class="item-block"><div class="item-tw"><h3 class="item-t cx i">Adipiscing</h3><span class="new-w-2 sp"><span class="new-2 cx i">New</span></span></div>
+                <p class="item-desc">Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur.</p></div>
+            </a></article>
+            <article class="item l"><a class="item-link" href="work.html" data-color="#1d1d1b" draggable="false">
+              <div class="item-img-w"><div class="item-img ph ph-slate" data-ph="Image"></div></div>
+              <div class="item-block"><div class="item-tw"><h3 class="item-t cx i">Elit Sed</h3></div>
+                <p class="item-desc">Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.</p></div>
+            </a></article>
+          </div></div>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- ============ MAIN GRID ============ -->
+    <div class="main h">
+      <div class="h-grid">
+
+        <!-- Hero word -->
+        <div class="h-item h1">
+          <h1 class="head h" data-fit><span class="blk">Magnam</span></h1>
+        </div>
+
+        <!-- Intro column -->
+        <div class="h-item r-bord">
+          <div class="h-intro">
+            <div class="block" data-rules>
+              <h2 class="h-head s-1 cx">Lor<span class="f-span">e</span>m Ipsum</h2>
+              <h2 class="h-head sub cx">Dolor!</h2>
+              <div class="divs _0"><div class="div-2 _0"></div><div class="div-2"></div></div>
+            </div>
+            <div class="h-inner set2"><div class="h-img set2 ph ph-brown" data-ph="Portrait"></div></div>
+          </div>
+          <div class="h-drop left">
+            <p class="has-dropcap"><span class="dropcap cx i">L</span>orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam quis nostrud.</p>
+          </div>
+        </div>
+
+        <!-- Role lines -->
+        <div class="h-item w-clearfix">
+          <div class="h-inner set1"><div class="h-img set1 ph ph-slate" data-ph="Image"></div></div>
+          <div class="h-desc" data-rules>
+            <h2 class="h-head ex cx">L<span class="f-span">o</span>rem ipsum dolor</h2>
+            <h2 class="h-head ex cx">Consectetur elit</h2>
+            <h2 class="h-head ex cx">Adipis<span class="f-span">c</span>ing tempor</h2>
+            <h2 class="h-head ex cx">based in <span class="under">City, XX</span>.</h2>
+            <div class="divs"><div class="div-2"></div><div class="div-2"></div><div class="div-2"></div><div class="div-2"></div></div>
+          </div>
+        </div>
+
+        <!-- Stamp row -->
+        <div class="h-item stamp w-clearfix">
+          <div class="h-block"><h2 class="head set2"><span class="blk">Sample</span></h2></div>
+          <div class="stamp-w">
+            <div class="postage" role="img" aria-label="Placeholder postage stamp">
+              <svg class="postage-bg" viewBox="0 0 200 260" aria-hidden="true"><path d="M0 0 L2.74 0 A4.4 4.4 0 0 0 11.54 0 L17.03 0 A4.4 4.4 0 0 0 25.83 0 L31.31 0 A4.4 4.4 0 0 0 40.11 0 L45.60 0 A4.4 4.4 0 0 0 54.40 0 L59.89 0 A4.4 4.4 0 0 0 68.69 0 L74.17 0 A4.4 4.4 0 0 0 82.97 0 L88.46 0 A4.4 4.4 0 0 0 97.26 0 L102.74 0 A4.4 4.4 0 0 0 111.54 0 L117.03 0 A4.4 4.4 0 0 0 125.83 0 L131.31 0 A4.4 4.4 0 0 0 140.11 0 L145.60 0 A4.4 4.4 0 0 0 154.40 0 L159.89 0 A4.4 4.4 0 0 0 168.69 0 L174.17 0 A4.4 4.4 0 0 0 182.97 0 L188.46 0 A4.4 4.4 0 0 0 197.26 0 L200 0 L200 2.82 A4.4 4.4 0 0 0 200 11.62 L200 17.27 A4.4 4.4 0 0 0 200 26.07 L200 31.71 A4.4 4.4 0 0 0 200 40.51 L200 46.16 A4.4 4.4 0 0 0 200 54.96 L200 60.60 A4.4 4.4 0 0 0 200 69.40 L200 75.04 A4.4 4.4 0 0 0 200 83.84 L200 89.49 A4.4 4.4 0 0 0 200 98.29 L200 103.93 A4.4 4.4 0 0 0 200 112.73 L200 118.38 A4.4 4.4 0 0 0 200 127.18 L200 132.82 A4.4 4.4 0 0 0 200 141.62 L200 147.27 A4.4 4.4 0 0 0 200 156.07 L200 161.71 A4.4 4.4 0 0 0 200 170.51 L200 176.16 A4.4 4.4 0 0 0 200 184.96 L200 190.60 A4.4 4.4 0 0 0 200 199.40 L200 205.04 A4.4 4.4 0 0 0 200 213.84 L200 219.49 A4.4 4.4 0 0 0 200 228.29 L200 233.93 A4.4 4.4 0 0 0 200 242.73 L200 248.38 A4.4 4.4 0 0 0 200 257.18 L200 260 L197.26 260 A4.4 4.4 0 0 0 188.46 260 L182.97 260 A4.4 4.4 0 0 0 174.17 260 L168.69 260 A4.4 4.4 0 0 0 159.89 260 L154.40 260 A4.4 4.4 0 0 0 145.60 260 L140.11 260 A4.4 4.4 0 0 0 131.31 260 L125.83 260 A4.4 4.4 0 0 0 117.03 260 L111.54 260 A4.4 4.4 0 0 0 102.74 260 L97.26 260 A4.4 4.4 0 0 0 88.46 260 L82.97 260 A4.4 4.4 0 0 0 74.17 260 L68.69 260 A4.4 4.4 0 0 0 59.89 260 L54.40 260 A4.4 4.4 0 0 0 45.60 260 L40.11 260 A4.4 4.4 0 0 0 31.31 260 L25.83 260 A4.4 4.4 0 0 0 17.03 260 L11.54 260 A4.4 4.4 0 0 0 2.74 260 L0 260 L0 257.18 A4.4 4.4 0 0 0 0 248.38 L0 242.73 A4.4 4.4 0 0 0 0 233.93 L0 228.29 A4.4 4.4 0 0 0 0 219.49 L0 213.84 A4.4 4.4 0 0 0 0 205.04 L0 199.40 A4.4 4.4 0 0 0 0 190.60 L0 184.96 A4.4 4.4 0 0 0 0 176.16 L0 170.51 A4.4 4.4 0 0 0 0 161.71 L0 156.07 A4.4 4.4 0 0 0 0 147.27 L0 141.62 A4.4 4.4 0 0 0 0 132.82 L0 127.18 A4.4 4.4 0 0 0 0 118.38 L0 112.73 A4.4 4.4 0 0 0 0 103.93 L0 98.29 A4.4 4.4 0 0 0 0 89.49 L0 83.84 A4.4 4.4 0 0 0 0 75.04 L0 69.40 A4.4 4.4 0 0 0 0 60.60 L0 54.96 A4.4 4.4 0 0 0 0 46.16 L0 40.51 A4.4 4.4 0 0 0 0 31.71 L0 26.07 A4.4 4.4 0 0 0 0 17.27 L0 11.62 A4.4 4.4 0 0 0 0 2.82 Z" fill="#e4dfd8"/></svg>
+              <svg class="postage-art" viewBox="0 0 200 150" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <g stroke="#ef7a46" stroke-width="5" stroke-linecap="round" fill="none">
+                  <line x1="100" y1="82" x2="100" y2="14"/><line x1="100" y1="82" x2="131" y2="18"/><line x1="100" y1="82" x2="69" y2="18"/>
+                  <line x1="100" y1="82" x2="160" y2="32"/><line x1="100" y1="82" x2="40" y2="32"/>
+                  <line x1="100" y1="82" x2="184" y2="52"/><line x1="100" y1="82" x2="16" y2="52"/>
+                  <line x1="100" y1="82" x2="196" y2="76"/><line x1="100" y1="82" x2="4" y2="76"/>
+                </g>
+                <rect x="4" y="76" width="192" height="9" fill="#ef7a46"/>
+                <rect x="4" y="90" width="192" height="3" fill="#ef7a46" opacity=".7"/>
+                <path d="M40 140 c8 -40 14 -44 18 -6 c3 18 7 -20 13 -16 c6 6 10 20 20 12 c8 -7 14 -2 22 -2 c10 0 12 -5 22 -3 c8 2 12 -2 20 0" fill="none" stroke="#1d1d1b" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <div class="postage-meta"><span>NAME: <b>Jane Doe</b></span><span>DATE: <b>01/01/2000</b></span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Upcoming + CTA -->
+        <div class="h-item flex demo">
+          <div class="h-col left">
+            <div class="h-info-w">
+              <div class="headline set3">
+                <div class="head-wrap"><div class="head-title cx i">Up<span class="dom">co</span>min<span class="dom">g</span> Next</div></div>
+                <div class="head-desc left">Lorem ipsum dolor sit —<br>amet consectetur from<br>adipiscing elit sed.</div>
+                <div class="head-caption"><div class="item-title cap cx i">Tip!</div><div class="item-desc cap">Click on the image to explore</div></div>
+              </div>
+              <div class="h-info-col">
+                <div class="s-grid"><div class="s-block">
+                  <article class="item l"><div class="item-link">
+                    <div class="item-img-w"><div class="item-img ph ph-blue" data-ph="Image"></div></div>
+                    <div class="item-block"><div class="item-tw"><h3 class="item-t cx i">Sed Tempor</h3></div>
+                      <p class="item-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore.</p></div>
+                  </div></article>
+                </div></div>
+              </div>
+            </div>
+            <div class="h-inner set3"><div class="h-img set3 ph ph-brown" data-ph="Feature image"></div></div>
+          </div>
+
+          <div class="h-col right">
+            <div class="block" data-rules>
+              <h2 class="h-head s cx">Lorem, <span class="f-span">D</span>olor</h2>
+              <h2 class="h-head sub-2 cx">Dolore</h2>
+              <div class="divs set3"><div class="div-2 _1"></div><div class="div-2"></div></div>
+            </div>
+            <div class="h-drop">
+              <p class="has-dropcap"><span class="dropcap cx i">L</span>orem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor.</p>
+              <p class="h5 h3">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum.</p>
+            </div>
+            <a class="cta-h home" href="work.html" data-color="#1d1d1b">
+              <span class="cta-text work cx i">All W<span class="f-span">o</span>rk</span>
+              <svg class="arrow" viewBox="0 0 320 60" aria-hidden="true"><path d="M2 30 H300 M276 8 L304 30 L276 52" fill="none" stroke="#1d1d1b" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Counters -->
+        <div class="h-item awards">
+          <div class="m-row">
+            <div class="m-col"><div class="m-wrap w-clearfix"><div class="m-inner"><h3 class="m-init">Lorem ipsum dolor</h3><h3 class="m-title cx i">Awards</h3></div><div class="m-numb">9</div></div></div>
+            <div class="m-col"><div class="m-wrap w-clearfix"><div class="m-inner"><h3 class="m-init">Sit amet elit</h3><h3 class="m-title cx i">Winners</h3></div><div class="m-numb">1</div></div></div>
+            <div class="m-col"><div class="m-wrap w-clearfix"><div class="m-inner"><h3 class="m-init">Consectetur</h3><h3 class="m-title cx i">Awards</h3></div><div class="m-numb">6</div></div></div>
+            <div class="m-col"><div class="m-wrap w-clearfix"><div class="m-inner"><h3 class="m-init">Adipiscing</h3><h3 class="m-title cx i">Menti<span class="f-span">o</span>ns</h3></div><div class="m-numb">8</div></div></div>
+          </div>
+        </div>
+
+        <!-- Big-type collage -->
+        <div class="h-item aw">
+          <div class="h-row">
+            <div class="h-col half sub2">
+              <div class="h-inn w-clearfix">
+                <div class="h-inner set4"><div class="h-img set4 ph ph-brown" data-ph="Image"></div></div>
+                <h2 class="m-head s1 cx i">Sed</h2>
+              </div>
+              <div class="h-inn sp w-clearfix"><h2 class="m-head sub cx i">Amet</h2></div>
+            </div>
+            <div class="h-col half r">
+              <div class="h-inner set5 star"><div class="h-img set5 star ph ph-brown" data-ph="Image"></div></div>
+            </div>
+          </div>
+          <div class="h-row sp w-clearfix">
+            <div class="h-inner set4"><div class="h-img set4 ph ph-slate" data-ph="Image"></div></div>
+            <h2 class="m-head cx i">officia</h2>
+          </div>
+          <div class="h-row sp text w-clearfix">
+            <div class="h-block sub w-clearfix"><h2 class="m-head shape b"><span class="blk">laboris</span></h2></div>
+            <div class="h-description desktop">
+              <div class="txt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut <a class="under" href="about.html" data-color="#1d1d1b">labore et dolore</a> magna aliqua ut enim,</div>
+              <a class="block aww" href="#"><h2 class="h-head aww cx">Dolorem</h2></a>
+              <div class="txt">Ut enim ad minim veniam, quis nostrud, exercitation ullamco laboris nisi.</div>
+            </div>
+            <div class="h-description mobile">
+              <div class="txt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut <a class="under" href="about.html" data-color="#1d1d1b">labore et dolore</a> magna aliqua ut enim ad minim veniam.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stacked quote cards -->
+        <div class="h-item r">
+          <div class="aw-block-w">
+            <div class="aw-block s-1" data-card="0"><div class="aw-content">
+              <div class="aw-before"></div>
+              <div class="aw-desc s1">“Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.”</div>
+              <div class="aw-infos center h"><div class="aw-box ph ph-sand"></div><div class="aw-info"><h3 class="aw-name cx i">Jane Doe</h3><div class="aw-role">Creative Director &amp; Designer</div></div></div>
+            </div><div class="aw-inner"><div class="dash"></div></div></div>
+
+            <div class="aw-block s-2" data-card="1"><div class="aw-content">
+              <div class="aw-before"></div>
+              <div class="aw-desc s2">“Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat duis aute.”</div>
+              <div class="aw-infos center h"><div class="aw-box ph ph-ink"></div><div class="aw-info"><h3 class="aw-name cx i">John Roe</h3><div class="aw-role">Designer &amp; Art Director</div></div></div>
+            </div><div class="aw-inner"><div class="dash"></div></div></div>
+
+            <div class="aw-block s-3" data-card="2"><div class="aw-content">
+              <div class="aw-desc s3">“Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum sed ut.”</div>
+              <div class="aw-infos center h"><div class="aw-box ph ph-slate"></div><div class="aw-info"><h3 class="aw-name cx i">Alex Smith</h3><div class="aw-role">Creative Director at <a class="link" href="#">Studio</a></div></div></div>
+            </div><div class="aw-inner"><div class="dash"></div></div></div>
+
+            <div class="aw-block s-4" data-card="3"><div class="aw-content">
+              <div class="aw-desc s4">“Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium totam rem.”</div>
+              <div class="aw-infos center h"><div class="aw-box ph ph-ink"></div><div class="aw-info"><h3 class="aw-name cx i">Sam Poe</h3><div class="aw-role">Co-Founder at <a class="link" href="#">Company</a></div></div></div>
+            </div><div class="aw-inner"><div class="dash"></div></div></div>
+          </div>
+        </div>
+
+        <!-- Closing strip -->
+        <div class="h-item aside">
+          <header class="sidebar">
+            <div class="s-border"></div>
+            <div class="s-container"><div class="s-inner">
+              <div class="s-grid"><div class="s-block">
+                <article class="item fl"><a class="item-link" href="work.html" data-color="#1d1d1b">
+                  <div class="item-img-w"><div class="item-img ph ph-blue" data-ph="Image"></div></div>
+                  <div class="item-block"><div class="item-tw"><h3 class="item-t cx i">Lorem Ipsum</h3><span class="new-w-2 sp"><span class="new-2 cx i">New</span></span></div>
+                    <p class="item-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore.</p></div>
+                </a></article>
+              </div></div>
+              <div class="headline m">
+                <a class="head-wrap" href="work.html" data-color="#1d1d1b">
+                  <div class="head-title cx i">All <span class="bef">W</span><span class="dom">o</span>rk!</div>
+                  <div class="head-embed" aria-hidden="true"><svg viewBox="0 0 500 146" preserveAspectRatio="none"><ellipse class="head doodle-hover" cx="250" cy="72.9" rx="242.4" ry="68.5"/></svg></div>
+                </a>
+                <div class="head-desc">Lorem ipsum dolor —<br>sit amet consectetur<br>adipiscing elit.</div>
+                <div class="head-caption"><div class="item-title cap cx i">Tip!</div><div class="item-desc cap">Click on the sides to explore</div></div>
+              </div>
+              <div class="s-grid ri"><div class="s-block">
+                <article class="item l"><a class="item-link" href="work.html" data-color="#1d1d1b">
+                  <div class="item-img-w"><div class="item-img ph ph-blue" data-ph="Image"></div></div>
+                  <div class="item-block"><div class="item-tw"><h3 class="item-t cx i">Lorem Ipsum</h3><span class="new-w-2 sp"><span class="new-2 cx i">New</span></span></div>
+                    <p class="item-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore.</p></div>
+                </a></article>
+              </div></div>
+            </div></div>
+          </header>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="footer">
+      <div class="marquee" aria-label="Let's create something together — email me">
+        <div class="marquee--inner">
+          <div class="marquee-content"><h4 class="f-news">Lorem ipsum dolor sit amet</h4><a class="marquee-link" href="mailto:hello@example.com"><span class="marquee-text cx i">Email Me</span></a></div>
+          <div class="marquee-content" aria-hidden="true"><h4 class="f-news">Lorem ipsum dolor sit amet</h4><a class="marquee-link" tabindex="-1" href="mailto:hello@example.com"><span class="marquee-text cx i">Email Me</span></a></div>
+          <div class="marquee-content" aria-hidden="true"><h4 class="f-news">Lorem ipsum dolor sit amet</h4><a class="marquee-link" tabindex="-1" href="mailto:hello@example.com"><span class="marquee-text cx i">Email Me</span></a></div>
+        </div>
+      </div>
+      <div class="f-info">
+        <div class="f-col left">
+          <div class="f-title cx i">Magnam©</div>
+          <svg class="f-stamp" viewBox="0 0 24 30" aria-hidden="true"><rect x="1" y="1" width="22" height="28" fill="#e2dedb" stroke="#1d1d1b" stroke-width="1"/><path d="M12 8 v8 M7 14 l5 -5 l5 5" stroke="#ef7a46" stroke-width="1.6" fill="none"/><rect x="5" y="19" width="14" height="1.6" fill="#1d1d1b" opacity=".5"/></svg>
+          <div class="legal-w"><a class="f-link new-tab" href="#" target="_blank" rel="noopener">Legal</a></div>
+        </div>
+        <div class="f-col">
+          <div class="f-block w-clearfix">
+            <a class="f-li new-tab f" href="#" target="_blank" rel="noopener">twitter</a><span class="f-li ci f">·</span>
+            <a class="f-li new-tab f" href="#" target="_blank" rel="noopener">insta<span class="f-span">g</span>ram</a><span class="f-li ci f">·</span>
+            <a class="f-li new-tab f" href="#" target="_blank" rel="noopener">dribbble</a><span class="f-li ci f">·</span>
+            <a class="f-li new-tab f" href="#" target="_blank" rel="noopener">behan<span class="f-span">c</span>e</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </main>
+  </div>
+</body>
+</html>
