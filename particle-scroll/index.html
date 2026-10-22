@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Particle Scroll</title>
-<meta name="description" content="Scroll-driven 3D particle forms: each shape turns edge-on, breaks into a starfield and reforms as the next.">
+<meta name="description" content="One 3D particle system that turns continuously and, as you scroll, dissolves the rupee into a cloud, reforms it as a neural brain, then as an EV battery swap.">
 <style>
-  /* One black stage: a fixed WebGL canvas over a tall, empty scroll track. Single dark look by design. */
+  /* One black stage pinned (sticky) inside a tall scroll section; released after the last formation. Single dark look by design. */
   :root{
     --bg:#000;
     --fg:#fff;
@@ -18,23 +18,31 @@
   [hidden]{display:none!important}
   html,body{margin:0;background:var(--bg);color:var(--fg)}
   body{font-family:var(--ui);overscroll-behavior-y:none}
-  .stage{position:fixed;inset:0;width:100%;height:100%;display:block;pointer-events:none}
-  .track{position:relative;width:100%;height:880vh}
-  .cue{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);
+  .scrub{position:relative;height:600vh}
+  .pin{position:sticky;top:0;height:100vh;height:100lvh;overflow:hidden}
+  .stage{position:absolute;inset:0;width:100%;height:100%;display:block}
+  .tail{height:40vh}
+  .cue{position:absolute;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);
     display:flex;flex-direction:column;align-items:center;gap:10px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);
     transition:opacity .6s ease;pointer-events:none}
   .cue i{display:block;width:1px;height:34px;background:linear-gradient(var(--muted),transparent);animation:cue 2.2s ease-in-out infinite}
   .cue.gone{opacity:0}
   @keyframes cue{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
   @media (prefers-reduced-motion:reduce){.cue i{animation:none}}
-  .fallback{position:fixed;inset:0;display:grid;place-items:center;padding:0 max(16px,env(safe-area-inset-left,0px)) 0 max(16px,env(safe-area-inset-right,0px));text-align:center;color:var(--muted);font-size:14px;line-height:1.6}
+  .fallback{position:absolute;inset:0;display:grid;place-items:center;padding:0 max(16px,env(safe-area-inset-left,0px)) 0 max(16px,env(safe-area-inset-right,0px));text-align:center;color:var(--muted);font-size:14px;line-height:1.6}
 </style>
 </head>
 <body>
-  <canvas class="stage" id="stage" aria-label="Particle shapes that turn and dissolve as you scroll" role="img"></canvas>
-  <div class="track" id="track" aria-hidden="true"></div>
-  <div class="cue" id="cue"><span>Scroll</span><i></i></div>
-  <p class="fallback" id="fallback" hidden>This animation needs WebGL, which this browser has turned off.</p>
+  <section class="scrub" id="scrub">
+    <div class="pin">
+      <canvas class="stage" id="stage" role="img" aria-label="A particle rupee symbol that dissolves into a neural brain, then into an electric car and battery exchange, as you scroll"></canvas>
+      <div class="cue" id="cue"><span>Scroll</span><i></i></div>
+      <p class="fallback" id="fallback" hidden>This animation needs WebGL, which this browser has turned off.</p>
+    </div>
+  </section>
+  <div class="tail" aria-hidden="true"></div>
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
   <script type="module" src="js/main.js"></script>
 </body>
 </html>
