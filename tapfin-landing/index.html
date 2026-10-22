@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TapFin | Finance. Analyse. Resale.</title>
+<meta name="description" content="One ecosystem for the entire asset lifecycle – every OEM, IoT, form factor, fuel technology and geography.">
+<meta name="theme-color" content="#08090a">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2308090a'/%3E%3Ccircle cx='16' cy='16' r='5' fill='%23339D52'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body class="is-loading">
+
+<!-- the one particle field behind everything -->
+<canvas id="field" aria-hidden="true"></canvas>
+<div class="grain" aria-hidden="true"></div>
+<div class="vignette" aria-hidden="true"></div>
+
+<!-- preloader: one spark charging up -->
+<div class="loader" aria-hidden="true">
+  <div class="loader-spark"></div>
+  <div class="loader-meta"><span>Charging</span><span class="loader-pct">0%</span></div>
+</div>
+
+<!-- scroll progress as a charge bar -->
+<div class="charge" aria-hidden="true"><span class="charge-fill"></span><span class="charge-pct">0%</span></div>
+
+<div class="cursor" aria-hidden="true"><span class="cursor-dot"></span><span class="cursor-ring"></span></div>
+
+<header class="nav" id="top">
+  <a class="nav-logo" href="#top" aria-label="TapFin home">TAPFIN</a>
+  <nav class="nav-links" aria-label="Primary">
+    <div class="nav-item has-menu">
+      <button class="nav-link" aria-expanded="false" aria-haspopup="true">Finance <span class="caret" aria-hidden="true"></span></button>
+      <div class="menu" role="menu">
+        <a role="menuitem" href="https://gogreencapital.in" target="_blank" rel="noopener"><strong>GoGreen Capital <span aria-hidden="true">↗</span></strong><small>Data-backed in-house NBFC</small></a>
+        <a role="menuitem" href="https://tapfintech.in" target="_blank" rel="noopener"><strong>TAP FinTech <span aria-hidden="true">↗</span></strong><small>End-to-end loan application processing with 10+ lending partners</small></a>
+      </div>
+    </div>
+    <div class="nav-item has-menu">
+      <button class="nav-link" aria-expanded="false" aria-haspopup="true">Data Analytics <span class="caret" aria-hidden="true"></span></button>
+      <div class="menu" role="menu">
+        <a role="menuitem" href="/trust"><strong>TRUST</strong><small>Data-based decisions across underwriting, monitoring, collections and resale</small></a>
+        <a role="menuitem" href="/fleetforce"><strong>FleetForce</strong><small>Operational intelligence across behaviour, utilisation, profitability and lifecycle</small></a>
+        <a role="menuitem" href="/xchange"><strong>TapFin Xchange</strong><small>Usage-backed resale valuation for pre-owned EVs</small></a>
+      </div>
+    </div>
+    <a class="nav-link" href="#why">Why TapFin</a>
+    <div class="nav-item has-menu">
+      <button class="nav-link" aria-expanded="false" aria-haspopup="true">Insights <span class="caret" aria-hidden="true"></span></button>
+      <div class="menu" role="menu">
+        <a role="menuitem" href="/blogs"><strong>Blogs</strong></a>
+        <a role="menuitem" href="/careers"><strong>Life at TapFin</strong></a>
+        <a role="menuitem" href="/news"><strong>TapFin in News</strong></a>
+      </div>
+    </div>
+    <div class="nav-mobile-cta">
+      <a class="nav-link" href="https://tapfin.ai" target="_blank" rel="noopener">Login</a>
+      <a class="btn btn-primary btn-block" href="#contact"><span>Request a Demo</span></a>
+    </div>
+  </nav>
+  <div class="nav-cta">
+    <a class="nav-login" href="https://tapfin.ai" target="_blank" rel="noopener">Login</a>
+    <a class="btn btn-primary magnetic" href="#contact"><span>Request a Demo</span></a>
+    <button class="nav-burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+
+<!-- 01 · HERO -->
+<section class="hero" data-scene="hero" aria-labelledby="hero-title">
+  <div class="hero-inner">
+    <p class="overline reveal-up"><span class="pulse-dot"></span>What TapFin is</p>
+    <h1 id="hero-title" class="hero-title">
+      <span class="hero-word" data-shape="rupee">Finance.</span>
+      <span class="hero-word" data-shape="database">Analyse.</span>
+      <span class="hero-word" data-shape="xchange">Resale.</span>
+    </h1>
+    <p class="body-l hero-sub reveal-up">One ecosystem for the entire asset lifecycle – every OEM, IoT, form factor, fuel technology and geography.</p>
+    <div class="hero-actions reveal-up">
+      <a class="btn btn-primary btn-lg magnetic" href="#contact"><span>Request a Demo</span></a>
+    </div>
+  </div>
+  <div class="hero-hud" aria-hidden="true">
+    <span class="hud-l">Vehicle-to-data transformation</span>
+    <span class="hud-scroll"><i></i>Scroll</span>
+    <span class="hud-r"><b class="hud-deg">000</b>°</span>
+  </div>
+</section>
+
+<!-- 02 · WHY TAPFIN -->
+<section class="why" id="why" data-scene="stream" aria-labelledby="why-title">
+  <div class="container">
+    <p class="overline">Why TapFin · What we do</p>
+    <h2 id="why-title" class="h2 scrub">Deep asset intelligence. Smarter decisions at every stage</h2>
+    <p class="overline built-on">Built on</p>
+    <div class="stats">
+      <div class="stat"><span class="stat-num" data-count="1.91" data-decimals="2" data-suffix="B+">1.91B+</span><span class="small">Data points processed</span></div>
+      <div class="stat"><span class="stat-num" data-count="42.2" data-decimals="1" data-suffix="M+">42.2M+</span><span class="small">Kilometres analysed</span></div>
+      <div class="stat"><span class="stat-num" data-count="10" data-decimals="0" data-suffix="+">10+</span><span class="small">Lender partners</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- the three pillars: a horizontal journey -->
+<section class="pillars" aria-label="Finance, Intelligence and Resale Marketplace">
+  <div class="pillars-track">
+    <article class="pillar" data-scene="pillar-finance">
+      <div class="pillar-copy">
+        <span class="pillar-index">01 / 03</span>
+        <h3 class="h2">Finance</h3>
+        <p class="body-l">Smarter financing, powered by asset intelligence.</p>
+        <ul class="pillar-links">
+          <li><a href="https://gogreencapital.in" target="_blank" rel="noopener"><span class="h4">GoGreen Capital <i aria-hidden="true">→</i></span><span class="small">Data-backed in-house NBFC</span></a></li>
+          <li><a href="https://tapfintech.in" target="_blank" rel="noopener"><span class="h4">TAP FinTech <i aria-hidden="true">→</i></span><span class="small">End-to-end loan application processing with 10+ lending partners</span></a></li>
+        </ul>
+      </div>
+    </article>
+    <article class="pillar" data-scene="pillar-intel">
+      <div class="pillar-copy">
+        <span class="pillar-index">02 / 03</span>
+        <h3 class="h2">Intelligence</h3>
+        <p class="body-l">Usage-based intelligence for performance and risk decisions.</p>
+        <ul class="pillar-links">
+          <li><a href="/trust"><span class="h4">TRUST <i aria-hidden="true">→</i></span><span class="small">Data-based decisions across underwriting, monitoring, collections and resale</span></a></li>
+          <li><a href="/fleetforce"><span class="h4">FleetForce <i aria-hidden="true">→</i></span><span class="small">Operational intelligence across behaviour, utilisation, profitability and lifecycle</span></a></li>
+        </ul>
+      </div>
+    </article>
+    <article class="pillar" data-scene="pillar-resale">
+      <div class="pillar-copy">
+        <span class="pillar-index">03 / 03</span>
+        <h3 class="h2">Resale Marketplace</h3>
+        <p class="body-l">Unlock the right value of every asset.</p>
+        <ul class="pillar-links">
+          <li><a href="/xchange"><span class="h4">TapFin Xchange <i aria-hidden="true">→</i></span><span class="small">Usage-backed resale valuation for pre-owned EVs</span></a></li>
+        </ul>
+        <figure class="figure-frame figure-swap">
+          <iframe src="figures/swappack.html?theme=dark" title="Swap Pack: a battery tray whose modules lift out for inspection" loading="lazy" data-embed="hairline"></iframe>
+        </figure>
+      </div>
+    </article>
+  </div>
+  <div class="pillars-progress" aria-hidden="true"><span></span></div>
+</section>
+
+<!-- 03 · WHO WE ARE -->
+<section class="about" id="about" data-scene="rings" aria-labelledby="about-title">
+  <div class="container about-grid">
+    <div class="about-copy">
+      <p class="overline">Who we are</p>
+      <h2 id="about-title" class="h2 split-up">About Us</h2>
+      <p class="body-l scrub">TapFin is building what we believe the sustainability ecosystem has been missing – a unified layer that sits at the intersection of financing, asset intelligence and resale across the entire lifecycle.</p>
+      <p class="body-l scrub">Built by people who understand assets from the ground up, we combine real-world operations, data and AI to turn asset data into informed decisions.</p>
+    </div>
+    <div class="about-orbit" aria-hidden="true">
+      <span style="--a:0">Financing</span><span style="--a:1">Intelligence</span><span style="--a:2">Resale</span>
+    </div>
+  </div>
+</section>
+
+<!-- Why now: a scroll story -->
+<section class="whynow" aria-labelledby="whynow-title">
+  <div class="beat beat-center" data-scene="wn-car">
+    <h2 id="whynow-title" class="h1 split-up">Why now?</h2>
+    <p class="h4 reveal-up">EVs are not just vehicles. They are connected, data-rich assets.</p>
+  </div>
+
+  <div class="beat beat-split" data-scene="wn-data">
+    <div class="beat-copy">
+      <p class="h3 reveal-up">A modern EV journey generates millions of data points</p>
+      <ul class="chips">
+        <li>GPS</li><li>Mileage</li><li>Battery health</li><li>Utilisation</li><li>Charging pattern</li><li>Driving behaviour</li><li>Trip completion</li><li>Revenue</li>
+      </ul>
+    </div>
+    <figure class="figure-frame figure-logger">
+      <iframe src="figures/logger.html" title="EV journey logger: an eight-channel strip-chart recorder" loading="lazy" data-embed="anatomy"></iframe>
+    </figure>
+  </div>
+
+  <div class="beat beat-silos" data-scene="wn-silos">
+    <p class="h4 reveal-up silos-lead">Yet decisions across the asset lifecycle are still often made in silos:</p>
+    <div class="silos">
+      <div class="silo"><span class="overline">Financing</span><p>Bureau and borrower creditworthiness</p></div>
+      <div class="silo"><span class="overline">Intelligence</span><p>Mileage, GPS and trip completion</p></div>
+      <div class="silo"><span class="overline">Resale</span><p>No. of ownerships and asset age</p></div>
+    </div>
+  </div>
+
+  <div class="beat beat-center beat-wide" data-scene="wn-stream">
+    <p class="h2 scrub">TapFin's AI algorithms turn continuously generated asset data into AI-enabled actionable intelligence across the lifecycle.</p>
+  </div>
+
+  <div class="beat beat-outcomes" data-scene="wn-shield">
+    <ol class="outcomes">
+      <li class="outcome"><span class="outcome-n">01</span><h3 class="h3">Finance with confidence</h3><p>Informed underwriting, risk and collections intelligence for lenders</p></li>
+      <li class="outcome"><span class="outcome-n">02</span><h3 class="h3">Monitor with early risk signals</h3><p>Mitigate operational loopholes and optimise performance</p></li>
+      <li class="outcome"><span class="outcome-n">03</span><h3 class="h3">Usage-based resale</h3><p>Transparent and utilisation-based pricing</p></li>
+    </ol>
+  </div>
+</section>
+
+<!-- the people -->
+<section class="people" data-scene="people" aria-labelledby="people-title">
+  <div class="container">
+    <h2 id="people-title" class="h2 split-up">The People Behind TapFin</h2>
+
+    <p class="overline people-label">Founders</p>
+    <div class="founders">
+      <article class="person person-lg">
+        <canvas class="monogram" data-initials="AS" width="220" height="220" aria-hidden="true"></canvas>
+        <div>
+          <h3 class="h3">Aditya Singh</h3>
+          <p class="role">Co-Founder &amp; CEO, TapFin</p>
+          <p>Fintech and mobility entrepreneur with 20+ years across EVs, financing, technology and financial services. Co-founded and scaled CreditMate for 5 years, before its acquisition by Paytm.</p>
+          <p class="small edu">MBA, XLRI Jamshedpur | IT, Delhi University</p>
+        </div>
+      </article>
+      <article class="person person-lg">
+        <canvas class="monogram" data-initials="TB" width="220" height="220" aria-hidden="true"></canvas>
+        <div>
+          <h3 class="h3">Terniza Berry</h3>
+          <p class="role">Co-Founder &amp; COO, TapFin</p>
+          <p>Banking and fintech leader with 20+ years across SME and retail banking, supply chain financing and compliance. 16+ years at HSBC, then COO of MoEVing Fintech.</p>
+          <p class="small edu">MBA, XLRI Jamshedpur | CBS Delhi</p>
+        </div>
+      </article>
+    </div>
+
+    <p class="overline people-label">The Team</p>
+    <div class="team">
+      <article class="person">
+        <canvas class="monogram" data-initials="NS" width="180" height="180" aria-hidden="true"></canvas>
+        <h3 class="h4">Nikhil Saigal</h3>
+        <p class="role">Chief Business Officer</p>
+        <p class="small">Nearly two decades across payments, fintech, partnerships and commercial growth; ~9 years at Paytm, also Flipkart.</p>
+      </article>
+      <article class="person">
+        <canvas class="monogram" data-initials="SS" width="180" height="180" aria-hidden="true"></canvas>
+        <h3 class="h4">Samir Sahu</h3>
+        <p class="role">Chief Technology Officer</p>
+        <p class="small">15+ years across lending technology, data analytics and software engineering; Arthimpact Finserve, ADH Deutschland.</p>
+      </article>
+      <article class="person">
+        <canvas class="monogram" data-initials="CK" width="180" height="180" aria-hidden="true"></canvas>
+        <h3 class="h4">Charu Kapur</h3>
+        <p class="role">Chief Financial Officer</p>
+        <p class="small">20+ years across financial services, capital raising and business strategy; Netafim, Samunnati, NBHC.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- 04 · CTA -->
+<section class="contact" id="contact" data-scene="contact" aria-labelledby="contact-title">
+  <div class="container contact-grid">
+    <div class="contact-copy">
+      <h2 id="contact-title" class="h1 split-up">Get a callback</h2>
+      <ul class="contact-lines">
+        <li><a href="tel:+918069645301"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span>+91 80696 45301</a></li>
+        <li><a href="mailto:contact@tapfin.in"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg></span>contact@tapfin.in</a></li>
+      </ul>
+    </div>
+    <form class="form" novalidate>
+      <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" placeholder="Full name" autocomplete="name" required></div>
+      <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" placeholder="name@company.com" autocomplete="email" required></div>
+      <div class="field"><label for="f-company">Company</label><input id="f-company" name="company" placeholder="Company" autocomplete="organization"></div>
+      <div class="field"><label for="f-phone">Phone number</label><input id="f-phone" name="phone" type="tel" placeholder="+91" autocomplete="tel"></div>
+      <div class="field field-full"><label for="f-solution">Select a solution</label>
+        <div class="select"><select id="f-solution" name="solution">
+          <option value="">Choose a solution</option>
+          <option>GoGreen Capital</option><option>TAP FinTech</option><option>TRUST</option><option>FleetForce</option><option>TapFin Xchange</option>
+        </select></div>
+      </div>
+      <button class="btn btn-primary btn-block magnetic" type="submit"><span>Speak with our team</span></button>
+      <p class="form-status small" role="status" aria-live="polite"></p>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer" data-scene="footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a class="nav-logo" href="#top">TAPFIN</a>
+      <p class="small">Your trusted partner on the journey to sustainability. Financing and technology for a greener tomorrow.</p>
+    </div>
+    <div><h4 class="footer-h">Information</h4><ul><li><a href="#top">Home</a></li><li><a href="/finance">Finance</a></li><li><a href="/trust">Data Analytics</a></li><li><a href="/blogs">Insights</a></li><li><a href="/careers">Careers</a></li></ul></div>
+    <div><h4 class="footer-h">Legal &amp; Policy</h4><ul><li><a href="#contact">Contact us</a></li><li><a href="/disclaimer">Disclaimer</a></li><li><a href="/terms">Terms &amp; Conditions</a></li><li><a href="/privacy">Privacy Policy</a></li></ul></div>
+    <div><h4 class="footer-h">Contact Us</h4><ul><li><a href="tel:+918069645301">+91 80696 45301</a></li><li><a href="mailto:contact@tapfin.in">contact@tapfin.in</a></li><li>Ghatkopar West, Mumbai 400086</li></ul></div>
+  </div>
+  <div class="container footer-row">
+    <div>
+      <h4 class="footer-h">Social Media</h4>
+      <ul class="social">
+        <li><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg></a></li>
+        <li><a href="#" aria-label="X"><svg viewBox="0 0 24 24"><path d="M4 4l16 16M20 4 4 20"/></svg></a></li>
+        <li><a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5v.01"/></svg></a></li>
+        <li><a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="m10 9 5 3-5 3z"/></svg></a></li>
+        <li><a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M14 8h3V4h-3a4 4 0 0 0-4 4v3H7v4h3v6h4v-6h3l1-4h-4V8z"/></svg></a></li>
+      </ul>
+    </div>
+    <form class="newsletter" novalidate>
+      <label class="footer-h" for="n-email">Join our Newsletter</label>
+      <div class="newsletter-row"><input id="n-email" type="email" placeholder="Email address" autocomplete="email"><button class="btn btn-primary" type="submit" aria-label="Subscribe">→</button></div>
+    </form>
+  </div>
+  <div class="footer-mark" aria-hidden="true">TAPFIN</div>
+  <div class="container footer-legal"><p class="small">© 2026 Tapsys Pvt Ltd | All Rights Reserved.</p></div>
+</footer>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
