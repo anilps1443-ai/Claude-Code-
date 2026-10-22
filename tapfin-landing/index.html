@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TapFin</title>
+<meta name="description" content="One ecosystem for the entire asset lifecycle: every OEM, IoT, form factor, fuel technology and geography.">
+<meta name="theme-color" content="#010101">
+<link rel="icon" type="image/svg+xml" href="assets/tapfin-logo.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700&family=Poppins:wght@400;500&display=swap">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <!-- Lucide icons (ISC), inlined so the page needs no icon runtime -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+      <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></symbol>
+      <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></symbol>
+      <symbol id="i-indian-rupee" viewBox="0 0 24 24"><path d="M6 3h12"/><path d="M6 8h12"/><path d="m6 13 8.5 8"/><path d="M6 13h3"/><path d="M9 13c6.667 0 6.667-10 0-10"/></symbol>
+      <symbol id="i-brain-circuit" viewBox="0 0 24 24"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M9 13a4.5 4.5 0 0 0 3-4"/><path d="M6.003 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M12 13h4"/><path d="M12 18h6a2 2 0 0 1 2 2v1"/><path d="M12 8h8"/><path d="M16 8V5a2 2 0 0 1 2-2"/><circle cx="16" cy="13" r=".5"/><circle cx="18" cy="3" r=".5"/><circle cx="20" cy="21" r=".5"/><circle cx="20" cy="8" r=".5"/></symbol>
+      <symbol id="i-repeat-2" viewBox="0 0 24 24"><path d="m2 9 3-3 3 3"/><path d="M13 18H7a2 2 0 0 1-2-2V6"/><path d="m22 15-3 3-3-3"/><path d="M11 6h6a2 2 0 0 1 2 2v10"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="site-header" id="header">
+    <div class="bar">
+      <a class="brand" href="#" aria-label="TapFin home"><img src="assets/tapfin-logo-tight.svg" alt="TapFin" width="125" height="23"></a>
+
+      <nav class="primary" id="primaryNav" aria-label="Main">
+        <ul class="menu">
+          <li class="has-sub">
+            <button class="menu-link" type="button" aria-expanded="false" aria-controls="sub-finance">Finance<svg class="ico caret"><use href="#i-chevron-down"/></svg></button>
+            <ul class="sub" id="sub-finance">
+              <li><a href="#">EV Asset Finance</a></li>
+              <li><a href="#">Fleet Leasing</a></li>
+              <li><a href="#">Battery Finance</a></li>
+            </ul>
+          </li>
+          <li class="has-sub">
+            <button class="menu-link" type="button" aria-expanded="false" aria-controls="sub-data">Data Analytics<svg class="ico caret"><use href="#i-chevron-down"/></svg></button>
+            <ul class="sub" id="sub-data">
+              <li><a href="#">Asset Health</a></li>
+              <li><a href="#">Residual Value</a></li>
+              <li><a href="#">Risk Scoring</a></li>
+            </ul>
+          </li>
+          <li><a class="menu-link" href="#">Why TapFin</a></li>
+          <li class="has-sub">
+            <button class="menu-link" type="button" aria-expanded="false" aria-controls="sub-insights">Insights<svg class="ico caret"><use href="#i-chevron-down"/></svg></button>
+            <ul class="sub" id="sub-insights">
+              <li><a href="#">Blog</a></li>
+              <li><a href="#">Case Studies</a></li>
+              <li><a href="#">Reports</a></li>
+            </ul>
+          </li>
+        </ul>
+        <div class="menu-actions">
+          <a class="login" href="#">Login</a>
+          <a class="btn btn-light" href="#demo">Request a Demo</a>
+        </div>
+      </nav>
+
+      <a class="btn btn-light bar-demo" href="#demo">Request a Demo</a>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="primaryNav" aria-label="Open menu">
+        <svg class="ico ico-open"><use href="#i-menu"/></svg>
+        <svg class="ico ico-close"><use href="#i-x"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero-scrub" id="scrub" aria-labelledby="hero-title">
+      <div class="hero" id="hero">
+        <svg class="hero-lines" id="lines" aria-hidden="true"></svg>
+        <canvas class="hero-canvas" id="particles" role="img" aria-label="Particles form a rupee symbol, then a neural brain, then an electric car and battery exchange, as you scroll"></canvas>
+
+        <div class="hero-copy">
+          <h1 id="hero-title"><span class="word" data-step="0">Finance.</span> <span class="word" data-step="1">Analyse.</span> <span class="word" data-step="2">Resale.</span></h1>
+          <p class="lede">One ecosystem for the entire asset lifecycle – every OEM, IoT, form factor, fuel technology and geography.</p>
+          <a class="btn btn-light btn-cta" id="demo" href="#demo">Request a Demo<svg class="ico"><use href="#i-arrow-right"/></svg></a>
+        </div>
+
+        <div class="hero-stage" id="stage" aria-hidden="true"></div>
+
+        <ol class="steps" id="steps" aria-label="Lifecycle stages">
+          <li class="step" data-step="0"><svg class="ico"><use href="#i-indian-rupee"/></svg><span>Finance</span></li>
+          <li class="step" data-step="1"><svg class="ico"><use href="#i-brain-circuit"/></svg><span>Analyse</span></li>
+          <li class="step" data-step="2"><svg class="ico"><use href="#i-repeat-2"/></svg><span>Resale</span></li>
+          <li class="track" aria-hidden="true"><i id="trackFill"></i></li>
+        </ol>
+      </div>
+    </section>
+  </main>
+
+  <script src="vendor/gsap.min.js"></script>
+  <script src="vendor/ScrollTrigger.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
