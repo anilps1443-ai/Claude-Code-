@@ -14,7 +14,7 @@ python3 -m http.server 8000
 ```
 
 then open http://localhost:8000. (Opening `index.html` from disk won't work:
-the particle shapes are fetched.)
+browsers block ES modules on `file://`.)
 
 `?scene=<name>` holds the particles on one scene for review, e.g.
 `?scene=hero-xchange`. The names are the keys of `SCENES` in `js/main.js`.
@@ -28,7 +28,7 @@ the particle shapes are fetched.)
 | `js/particles.js` | The Three.js particle field: shape generators, morph shader |
 | `js/main.js` | Lenis smooth scroll, GSAP ScrollTrigger scenes, reveals, nav, form |
 | `assets/img/` | The four supplied particle artworks |
-| `assets/shapes/*.bin` | Point clouds sampled from those artworks (`tools/sample-shapes.py`) |
+| `assets/shapes.js` | Point clouds sampled from those artworks (`tools/sample-shapes.py`) |
 | `figures/swappack.html` | Hairline figure for the Resale pillar (source: `hairline/swappack.js`) |
 | `figures/logger.html` | Anatomy figure for "Why now?" (source: `anatomy/logger/build.mjs`) |
 | `vendor/` | three r160, GSAP 3.12.5 + ScrollTrigger, Lenis 1.1.20 |

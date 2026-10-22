@@ -3,6 +3,7 @@
 // position for every shape; the shader morphs between two of them with a
 // per-particle stagger and a turbulent drift, so nothing ever cuts.
 import * as THREE from "../vendor/three.module.min.js";
+import * as CLOUDS from "../assets/shapes.js";
 
 export const SHAPES = ["sphere", "car", "rupee", "database", "xchange", "shield", "rings", "silos", "stream", "wordmark"];
 const INDEX = Object.fromEntries(SHAPES.map((name, i) => [name, i]));
@@ -267,9 +268,10 @@ const FRAG = /* glsl */ `
 
 /* ---------- the field ---------- */
 
-async function loadCloud(url) {
-  const res = await fetch(url);
-  return new Int16Array(await res.arrayBuffer());
+function decodeCloud(b64) {
+  const bin = atob(b64), bytes = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+  return new Int16Array(bytes.buffer);
 }
 
 export async function createField(canvas, { count = 36000, reduced = false, font = "Archivo, sans-serif" } = {}) {
@@ -284,7 +286,7 @@ export async function createField(canvas, { count = 36000, reduced = false, font
 
   const N = count;
   const geo = new THREE.BufferGeometry();
-  const clouds = await Promise.all(["database", "rupee", "xchange", "shield"].map((n) => loadCloud(`assets/shapes/${n}.bin`)));
+  const clouds = ["database", "rupee", "xchange", "shield"].map((n) => decodeCloud(CLOUDS[n]));
   const [cDb, cRupee, cX, cShield] = clouds;
   const buffers = SHAPES.map(() => new Float32Array(N * 3));
   sphere(buffers[INDEX.sphere], N);
