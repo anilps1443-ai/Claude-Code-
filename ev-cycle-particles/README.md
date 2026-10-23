@@ -8,12 +8,13 @@ Every change is saved as a new version folder. Older versions stay as they were.
 
 | Version | Open | What changed |
 | --- | --- | --- |
-| **v2** (latest) | `v2/index.html` | Only dots now: the low-poly lines, faces and hidden depth mesh from v1 are gone, along with the `?debug` underlay. A continuous 360° turn around the vertical axis (one turn every 14 s) starts from the exact front view once the dots have gathered. The pointer tilt is replaced by the turn. |
+| **v3** (latest) | `v3/index.html` | Real Z-depth: each part is now a thick solid of dots, 140–200 units deep instead of 30. Each part has a front face, a back face and dotted side walls through the full depth, so the thickness shows as it turns. The badge and bolt stay on the front face. Wall dots fade when seen edge-on, so the front view still matches the artwork. The 360° turn is unchanged. |
+| v2 | `v2/index.html` | Only dots now: the low-poly lines, faces and hidden depth mesh from v1 are gone, along with the `?debug` underlay. A continuous 360° turn around the vertical axis (one turn every 14 s) starts from the exact front view once the dots have gathered. The pointer tilt is replaced by the turn. |
 | v1 | `v1/index.html` | First build: about 190k dots on the traced symbol, with near-invisible low-poly lines and faces, and pointer tilt. |
 
-![v2 reference vs render](shots/v2-compare.jpg)
+![v3 reference vs render](shots/v3-compare.jpg)
 
-![v2 turning through 360°](shots/v2-spin.jpg)
+![v3 part-way through the turn, showing its thickness](shots/v3-turn.jpg)
 
 ## Run
 
@@ -21,7 +22,7 @@ Open a version's `index.html` in a browser. Each one is a single self-contained 
 
 ```sh
 npx http-server ev-cycle-particles -p 8765 -c-1
-# then open /v2/
+# then open /v3/
 ```
 
 | URL flag | Effect |
@@ -31,20 +32,33 @@ npx http-server ev-cycle-particles -p 8765 -c-1
 
 `prefers-reduced-motion` turns off the intro and the 360° turn, and cuts the dot drift to a quarter.
 
-## How it's built (v2)
+## How it's built (v3)
 
 - **Traced geometry, in artboard pixels.**
   - The chevrons are traced from their corners.
   - Each arrow edge is a fitted circle (residuals within ±5 px). The tails are cut flat where they meet the X, and the heads are triangles.
   - The battery is boxes plus the badge ring and bolt. The car is a silhouette polygon.
   - `toWorld()` pre-scales x/y by depth, so the front view lands every dot on its exact pixel even though the shapes have real depth.
-- **Depth.** The blue chevron sits in front, then the green chevron, the battery block and the arrows. The car is a soft dome. Dots along each outline run through the thickness of each slab, so the symbol keeps its body when it turns side-on.
-- **Dots.** Particles are importance-sampled from the reference's brightness inside each traced shape, so the car lines, battery detail and texture land where they are in the artwork. There are six layers, all of them dots:
+- **Depth.** Each part is a solid block, centred on the turn axis. Values are [front, back] z, in artboard pixels:
+
+  | Part | Front, back | Thickness |
+  | --- | --- | --- |
+  | Blue chevron | 110, −50 | 160 |
+  | Green chevron | 80, −80 | 160 |
+  | Arrows | 70, −70 | 140 |
+  | Battery body | 90, −110 | 200 |
+  | Battery lid | 70, −90 | 160 |
+  | Battery terminal | 40, −60 | 100 |
+  | Car (rounded, thickest in the middle) | ±65 at the edges, ±100 in the middle | 130–200 |
+
+  Surface dots are split between the front face, the back face and the space between, so the front view adds up to the same image. Dotted side walls fill the full depth along every outline. They fade when seen edge-on (front view) and glow when they face the camera.
+- **Dots.** Particles are importance-sampled from the reference's brightness inside each traced shape, so the car lines, battery detail and texture land where they are in the artwork. There are seven layers, all of them dots:
   - soft base dots
   - coloured body dots
   - bright sparkles
   - edge light, snapped to the brightest line next to each traced outline
   - glow dots on the brightest strokes
+  - side-wall dots that give the thickness
   - a light dust halo, kept sparse on purpose
 - **Colours** come only from the palette: `#010101` background, `#F2F2F2` white, `#07699E` blue, `#339D52` green.
 - **Motion.** On load the dots gather into the symbol over about 2.8 s. The whole symbol then turns 360° around its vertical axis, one turn every 14 s. Each dot also drifts a few pixels and twinkles.
@@ -53,10 +67,10 @@ npx http-server ev-cycle-particles -p 8765 -c-1
 
 | File | Role |
 | --- | --- |
-| `v1/index.html`, `v2/index.html` | One complete scene per version |
+| `v1/`, `v2/`, `v3/` `index.html` | One complete scene per version |
 | `build_density.py` | Writes `reference.jpg`'s luminance (WebP, base64) into a version page. With no argument it updates the newest `vN/index.html` |
 | `reference.jpg` | Source artwork (2000 × 1494) |
-| `shots/` | Screenshots per version (`v1-*`, `v2-*`) |
+| `shots/` | Screenshots per version (`v1-*`, `v2-*`, `v3-*`) |
 
 ## Known limits
 
