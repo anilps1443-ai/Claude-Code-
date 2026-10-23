@@ -63,8 +63,14 @@ function drawLines() {
     d.push(`<path d="M${w} ${y.toFixed(1)}Q${(w - (w - cx) * 0.55).toFixed(1)} ${cy.toFixed(1)} ${cx.toFixed(1)} ${cy.toFixed(1)}"/>`);
   }
   lines.innerHTML = d.join('');
+  // The halo behind the formation follows it between layouts.
+  hero.style.setProperty('--fx', `${cx.toFixed(0)}px`);
+  hero.style.setProperty('--fy', `${cy.toFixed(0)}px`);
+  hero.style.setProperty('--halo-r', `${(Math.min(sr.width, sr.height) * 0.62).toFixed(0)}px`);
 }
-new ResizeObserver(drawLines).observe(hero);
+const lineObserver = new ResizeObserver(drawLines);
+lineObserver.observe(hero);
+lineObserver.observe(stage);
 drawLines();
 
 /* ---------- Stage rail and headline, following the formation on screen ---------- */
@@ -120,7 +126,8 @@ trackProgress((p) => {
   particles?.setProgress(p);
 });
 
-startParticles({ canvas: document.getElementById('particles'), stage, reduceMotion })
+const copy = [document.getElementById('copy'), document.getElementById('steps')];
+startParticles({ canvas: document.getElementById('particles'), stage, copy, reduceMotion })
   .then((api) => { particles = api; api.setProgress(pending); })
   .catch((err) => {
     // No WebGL: the hero still reads as designed, with the lines and the glow.

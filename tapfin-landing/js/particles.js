@@ -138,7 +138,8 @@ const vertexShader = /* glsl */ `
   uniform float uFrom, uTo, uT, uTime, uMotion, uAgitate;
   uniform float uCamZ, uTanHalf, uAspect, uPx, uSize, uScale;
   uniform vec3 uCenter;
-  uniform float uKeep, uMaxPx, uCopyY;
+  uniform float uKeep, uMaxPx;
+  uniform vec4 uCopy;     // text block in clip space: x0, y0, x1, y1
   uniform mat3 uRot;
   varying float vAlpha;
   varying float vSoft;
@@ -227,8 +228,10 @@ const vertexShader = /* glsl */ `
     vAlpha *= mix(1.0, lit, traveller * out_);        // only some travellers stay lit, scaled to screen area
     vAlpha *= smoothstep(0.25, 0.9, depth);
     gl_Position = projectionMatrix * mv;
-    // Stars passing behind the headline and copy are dimmed so the text stays readable.
-    float overCopy = smoothstep(uCopyY - 0.06, uCopyY + 0.1, gl_Position.y / gl_Position.w);
+    // Stars passing behind the headline, copy and rail are dimmed so the text stays readable.
+    vec2 ndc = gl_Position.xy / gl_Position.w;
+    float overCopy = smoothstep(uCopy.x - 0.08, uCopy.x + 0.04, ndc.x) * (1.0 - smoothstep(uCopy.z - 0.04, uCopy.z + 0.08, ndc.x))
+                   * smoothstep(uCopy.y - 0.08, uCopy.y + 0.04, ndc.y) * (1.0 - smoothstep(uCopy.w - 0.04, uCopy.w + 0.08, ndc.y));
     vAlpha *= 1.0 - 0.72 * overCopy * traveller * out_;
   }
 `;
@@ -260,7 +263,7 @@ export function stateAt(p) {
 
 // Draws the particle sequence into `canvas`, centring each formation on `stage` (an element
 // inside the canvas's box). Call setProgress(0..1) from scroll; the render loop eases toward it.
-export async function startParticles({ canvas, stage, reduceMotion }) {
+export async function startParticles({ canvas, stage, copy = [], reduceMotion }) {
   const lowPower = Math.min(innerWidth, innerHeight) < 700 || (navigator.hardwareConcurrency || 8) <= 4;
   const count = lowPower ? 40000 : 80000;
 
@@ -298,7 +301,7 @@ export async function startParticles({ canvas, stage, reduceMotion }) {
     uCamZ: { value: CAM_Z }, uTanHalf: { value: tanHalf }, uAspect: { value: 1 },
     uPx: { value: 1 }, uSize: { value: 0.01 }, uScale: { value: 1 },
     uCenter: { value: new THREE.Vector3() },
-    uKeep: { value: 0.5 }, uMaxPx: { value: 64 }, uCopyY: { value: 1 },
+    uKeep: { value: 0.5 }, uMaxPx: { value: 64 }, uCopy: { value: new THREE.Vector4(2, 2, 2, 2) },
     uRot: { value: new THREE.Matrix3() },
   };
   const material = new THREE.ShaderMaterial({
@@ -327,13 +330,20 @@ export async function startParticles({ canvas, stage, reduceMotion }) {
     uniforms.uCenter.value.set((s.left + s.width / 2 - c.left - w / 2) * toWorld, -(s.top + s.height / 2 - c.top - h / 2) * toWorld, 0);
     // A formation is 2 units tall and at most 2.7 wide before scaling.
     uniforms.uScale.value = Math.max(0.15, Math.min((FILL * s.height * toWorld) / 2, (0.8 * s.width * toWorld) / 2.7));
-    uniforms.uCopyY.value = 1 - (2 * (s.top - c.top)) / h;                  // stage top in clip space
+    // Bounding box of the text elements, in clip space (y up).
+    const boxes = copy.map((el) => el.getBoundingClientRect()).filter((b) => b.width && b.height);
+    if (boxes.length) {
+      const l = Math.min(...boxes.map((b) => b.left)), r = Math.max(...boxes.map((b) => b.right));
+      const t = Math.min(...boxes.map((b) => b.top)), btm = Math.max(...boxes.map((b) => b.bottom));
+      uniforms.uCopy.value.set(((l - c.left) / w) * 2 - 1, 1 - ((btm - c.top) / h) * 2, ((r - c.left) / w) * 2 - 1, 1 - ((t - c.top) / h) * 2);
+    }
     uniforms.uKeep.value = clamp((STAR_DENSITY * w * h) / (count * 0.3), 0.08, 0.5);
     uniforms.uMaxPx.value = Math.min(64, h * 0.045) * dpr;
   }
   const ro = new ResizeObserver(layout);
   ro.observe(canvas);
   ro.observe(stage);
+  copy.forEach((el) => ro.observe(el));
   layout();
 
   let target = 0, current = 0, primed = false;

@@ -78,20 +78,22 @@
         <svg class="hero-lines" id="lines" aria-hidden="true"></svg>
         <canvas class="hero-canvas" id="particles" role="img" aria-label="Particles form a rupee symbol, then a neural brain, then an electric car and battery exchange, as you scroll"></canvas>
 
-        <div class="hero-copy">
-          <h1 id="hero-title"><span class="word" data-step="0">Finance.</span> <span class="word" data-step="1">Analyse.</span> <span class="word" data-step="2">Resale.</span></h1>
-          <p class="lede">One ecosystem for the entire asset lifecycle – every OEM, IoT, form factor, fuel technology and geography.</p>
-          <a class="btn btn-light btn-cta" id="demo" href="#demo">Request a Demo<svg class="ico"><use href="#i-arrow-right"/></svg></a>
+        <div class="hero-grid">
+          <div class="hero-copy" id="copy">
+            <h1 id="hero-title"><span class="word" data-step="0">Finance.</span> <span class="word" data-step="1">Analyse.</span> <span class="word" data-step="2">Resale.</span></h1>
+            <p class="lede">One ecosystem for the entire asset lifecycle – every OEM, IoT, form factor, fuel technology and geography.</p>
+            <a class="btn btn-light btn-cta" id="demo" href="#demo">Request a Demo<svg class="ico"><use href="#i-arrow-right"/></svg></a>
+          </div>
+
+          <div class="hero-stage" id="stage" aria-hidden="true"></div>
+
+          <ol class="steps" id="steps" aria-label="Lifecycle stages">
+            <li class="step" data-step="0"><svg class="ico"><use href="#i-indian-rupee"/></svg><span>Finance</span></li>
+            <li class="step" data-step="1"><svg class="ico"><use href="#i-brain-circuit"/></svg><span>Analyse</span></li>
+            <li class="step" data-step="2"><svg class="ico"><use href="#i-repeat-2"/></svg><span>Resale</span></li>
+            <li class="track" aria-hidden="true"><i id="trackFill"></i></li>
+          </ol>
         </div>
-
-        <div class="hero-stage" id="stage" aria-hidden="true"></div>
-
-        <ol class="steps" id="steps" aria-label="Lifecycle stages">
-          <li class="step" data-step="0"><svg class="ico"><use href="#i-indian-rupee"/></svg><span>Finance</span></li>
-          <li class="step" data-step="1"><svg class="ico"><use href="#i-brain-circuit"/></svg><span>Analyse</span></li>
-          <li class="step" data-step="2"><svg class="ico"><use href="#i-repeat-2"/></svg><span>Resale</span></li>
-          <li class="track" aria-hidden="true"><i id="trackFill"></i></li>
-        </ol>
       </div>
     </section>
   </main>

@@ -1,5 +1,5 @@
-/* Layout: sticky header over a pinned hero; copy on top, a particle stage filling the space below,
-   a three-step lifecycle rail at the foot. Mobile first: 768px tablet, 1100px desktop. */
+/* Layout: sticky header over a pinned hero; a left-aligned copy column with a lifecycle rail, and the
+   particle formation in the right column (stacked under the copy on phones). Mobile first: 768px tablet, 1100px desktop. */
 :root {
   --ink: #010101;
   --white: #ffffff;
@@ -136,15 +136,18 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   .has-sub:hover > .menu-link .caret { transform: rotate(180deg); }
 }
 
-/* Hero: pinned while the particle sequence plays, released after the last formation */
+/* Hero: pinned while the particle sequence plays, released after the last formation.
+   Phones and portrait tablets stack copy → stage → rail; from 900px wide and landscape, the copy holds the left column
+   and the formation owns the right, with the horizon lines and halo converging on it. */
 .hero-scrub { position: relative; height: 520vh; }
 .hero {
   position: sticky; top: calc(var(--nav-h) + env(safe-area-inset-top, 0px));
   height: calc(100vh - var(--nav-h) - env(safe-area-inset-top, 0px));
   height: calc(100svh - var(--nav-h) - env(safe-area-inset-top, 0px));
-  min-height: 520px;
+  min-height: 540px;
   display: flex; flex-direction: column; overflow: hidden; isolation: isolate;
   background:
+    radial-gradient(circle var(--halo-r, 320px) at var(--fx, 50%) var(--fy, 62%), rgba(7, 105, 158, 0.24), rgba(7, 105, 158, 0)),
     radial-gradient(ellipse 86% 92% at 50% 16%, var(--ink) 57%, var(--glow-deep) 67%, var(--glow-mid) 80%, var(--glow-bright) 91%, var(--glow-rim) 100%),
     var(--ink);
 }
@@ -153,47 +156,75 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .hero-lines path { fill: none; stroke: rgba(255, 255, 255, 0.1); stroke-width: 1; }
 .hero-canvas { z-index: 1; pointer-events: none; }
 
-.hero-copy {
-  position: relative; z-index: 2; text-align: center;
-  padding: clamp(28px, 7vh, 92px) var(--gutter-r) 0 var(--gutter);
+.hero-grid {
+  position: relative; z-index: 2; flex: 1 1 auto; min-height: 0;
+  display: grid; grid-template-columns: minmax(0, 1fr);
+  grid-template-areas: "copy" "stage" "steps";
+  grid-template-rows: auto minmax(180px, 1fr) auto;
+  padding: clamp(24px, 5vh, 48px) var(--gutter-r) calc(16px + env(safe-area-inset-bottom, 0px)) var(--gutter);
 }
+.hero-copy { grid-area: copy; text-align: left; }
+.hero-stage { grid-area: stage; min-height: 0; margin: clamp(8px, 2vh, 24px) 0; }
+
 h1 {
   margin: 0; font-family: var(--font-head); font-weight: 700;
-  font-size: clamp(2.125rem, 1.1rem + 3.9vw, 5.25rem); line-height: 1.06; letter-spacing: -0.012em;
-  text-wrap: balance;
+  font-size: clamp(2.5rem, 1.6rem + 3.6vw, 3.5rem); line-height: 0.98; letter-spacing: -0.02em;
 }
-.word { display: inline-block; transition: opacity 0.6s ease; }
-.hero.is-playing .word:not(.on) { opacity: 0.4; }
+.word { display: block; transition: opacity 0.6s ease; }
+.hero.is-playing .word:not(.on) { opacity: 0.38; }
 .lede {
-  margin: clamp(14px, 2.4vh, 26px) auto 0; max-width: 54ch;
-  font-size: clamp(0.975rem, 0.86rem + 0.5vw, 1.375rem); line-height: 1.6; text-wrap: balance;
+  margin: clamp(14px, 2.2vh, 24px) 0 0; max-width: 40ch;
+  font-size: clamp(0.975rem, 0.9rem + 0.35vw, 1.125rem); line-height: 1.6; color: rgba(255, 255, 255, 0.86);
 }
-.btn-cta { margin-top: clamp(22px, 4.4vh, 52px); font-size: 1rem; }
+.btn-cta { margin-top: clamp(20px, 3.4vh, 36px); font-size: 1rem; }
 
-.hero-stage { position: relative; z-index: 0; flex: 1 1 auto; min-height: 200px; margin: clamp(12px, 3vh, 36px) 0 clamp(8px, 1.5vh, 16px); }
-
-/* Lifecycle rail: follows the formation on screen */
+/* Lifecycle rail: one row of stages over a progress line that fills as the sequence plays */
 .steps {
-  position: relative; z-index: 2; display: grid; grid-template-columns: repeat(3, 1fr);
-  width: min(100% - 32px, 460px); margin: 0 auto;
-  padding-bottom: calc(clamp(16px, 3.4vh, 36px) + env(safe-area-inset-bottom, 0px));
+  grid-area: steps; position: relative;
+  display: grid; grid-template-columns: repeat(3, auto); justify-content: space-between; column-gap: 16px; row-gap: 12px;
+  padding: 12px 14px 14px; border-radius: 14px;
+  background: rgba(1, 1, 1, 0.55); border: 1px solid rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
 }
-.step { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.step { display: flex; align-items: center; gap: 10px; }
 .step .ico {
-  box-sizing: content-box; width: 18px; height: 18px; padding: 9px; border-radius: 50%;
-  background: rgba(1, 1, 1, 0.55); border: 1px solid rgba(255, 255, 255, 0.24);
+  box-sizing: content-box; width: 16px; height: 16px; padding: 8px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.22);
   transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
 }
-.step span { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.6; transition: opacity 0.4s ease; }
-.step.on .ico { background: linear-gradient(135deg, var(--green), var(--blue)); border-color: transparent; box-shadow: 0 0 22px rgba(51, 157, 82, 0.45); }
-.step.on span { opacity: 1; }
-.track { position: absolute; z-index: 0; top: 18px; left: calc(100% / 6); right: calc(100% / 6); height: 1px; background: rgba(255, 255, 255, 0.2); }
+.step span { font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255, 255, 255, 0.66); transition: color 0.4s ease; }
+.step.on .ico { background: linear-gradient(135deg, var(--green), var(--blue)); border-color: transparent; box-shadow: 0 0 20px rgba(51, 157, 82, 0.4); }
+.step.on span { color: var(--white); }
+.track { grid-column: 1 / -1; position: relative; height: 2px; border-radius: 2px; background: rgba(255, 255, 255, 0.14); overflow: hidden; }
 .track i { position: absolute; inset: 0 auto 0 0; width: calc(var(--p, 0) * 100%); background: linear-gradient(90deg, var(--green), var(--blue)); }
 
+/* Very narrow phones: icon over label so all three stages fit */
+@media (max-width: 379px) {
+  .steps { column-gap: 8px; padding-inline: 10px; }
+  .step { flex-direction: column; gap: 6px; }
+  .step span { font-size: 0.625rem; letter-spacing: 0.12em; }
+}
+
 @media (min-width: 768px) {
-  .step .ico { width: 20px; height: 20px; padding: 10px; }
-  .track { top: 21px; }
+  h1 { font-size: clamp(3.25rem, 1.5rem + 4vw, 4.5rem); }
+  .steps { justify-content: start; column-gap: 32px; width: max-content; max-width: 100%; }
   .step span { font-size: 0.75rem; }
+}
+
+/* Two columns once the hero is wide and not portrait: copy left and vertically centred, formation right */
+@media (min-width: 900px) and (min-aspect-ratio: 1/1) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); column-gap: clamp(24px, 4vw, 72px);
+    grid-template-areas: ". stage" "copy stage" "steps stage" ". stage";
+    grid-template-rows: 1fr auto auto 1fr;
+    padding-block: clamp(24px, 4vh, 48px);
+  }
+  .hero-stage { margin: 0; }
+  h1 { font-size: clamp(3rem, min(1rem + 5vw, 11.5vh), 6.5rem); }
+  .lede { max-width: 38ch; font-size: clamp(1rem, 0.85rem + 0.4vw, 1.1875rem); }
+  .steps { margin-top: clamp(32px, 6.5vh, 72px); padding: 0; border: 0; border-radius: 0; background: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+  /* The lines fade out behind the copy and reach full strength at the formation */
+  .hero-lines { -webkit-mask-image: linear-gradient(90deg, transparent 18%, #fff 55%); mask-image: linear-gradient(90deg, transparent 18%, #fff 55%); }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -26,17 +26,19 @@ Headings use Archivo 700; body and navigation use Poppins 400/500. Icons come fr
 ## Layout
 
 - **Mobile first.** Under 768px: logo and menu button, with a full-height menu panel whose dropdowns become accordions. 768–1099px (tablet): adds "Request a Demo" to the bar. From 1100px (desktop): the full inline navigation with hover and click dropdowns, plus Login and Request a Demo.
-- **Hero.** The headline, subtitle and CTA are centred as in the design. The particle stage fills the remaining height, and a three-step rail (Finance · Analyse · Resale) sits at the foot. The converging horizon lines are drawn in SVG and always meet at the formation's centre, so they line up at every size.
+- **Hero, landscape at 900px and wider.** Two columns at 5:7. The copy holds the left column, left-aligned and vertically centred: the headline set one word per line (Finance. / Analyse. / Resale.), then the subtitle, the CTA and the stage rail. The particle formation is centred in the right column.
+- **Hero, phones and portrait tablets.** Left-aligned copy on top, the formation centred in the space below, and the stage rail on a dark backing at the foot, so it stays readable over the bright glow. Under 380px each stage shows its icon above its label.
+- **Following the formation.** The horizon lines and a soft brand-blue halo are positioned from the stage's measured centre, so they always meet the formation. In two columns, the lines fade out behind the copy.
 - **Pinned scroll.** The hero is pinned with CSS `position: sticky` for 520vh. ScrollTrigger turns that scroll into progress from 0 to 1, and the hero releases after the last formation. The headline word and the rail step for the current formation light up, and the rail fills in green to blue.
 
 ## Particle animation
 
 The engine is the same one as in `../particle-scroll`, adapted for this hero:
 
-- **Placement.** It draws on a transparent canvas over the glow, centred and sized to the stage, at no more than 72% of its height and 80% of its width.
+- **Placement.** It draws on a transparent canvas over the whole hero. Each formation is centred and sized to the stage, at no more than 72% of its height and 80% of its width.
 - **Left to right.** Each form turns continuously with its front face moving right. On the way out, the left side lets go first and drifts right. The next form fills in from its left side, and the starfield streams left to right while you scroll.
 - **Sequence.** Rupee, then brain, then EV and battery exchange. Scrolling up reverses it.
-- **Readability.** Star density is scaled to the screen area, stars that pass behind the headline are dimmed, and bokeh size is capped on small screens.
+- **Readability.** Star density is scaled to the screen area. Stars inside the measured box of the copy and rail are dimmed, in either layout, and bokeh size is capped on small screens.
 - **Reduced motion.** No idle turn, and drift drops to about a third.
 
 ## Placeholders to confirm
