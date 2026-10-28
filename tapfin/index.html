@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>TapFin</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="TapFin: one ecosystem for the entire asset lifecycle. Finance, analyse and resell EVs with usage-based asset intelligence.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: Finns template language. Warm stone canvas, charcoal ink, lime "charge" accent;
+   rounded stone panels hold white cards; small mono labels carry the asset data. */
+:root {
+  --bg: #f3f2f1;        /* warm stone canvas */
+  --panel: #e9e8e5;     /* section panels */
+  --card: #ffffff;
+  --ink: #2b2d2d;       /* charcoal text and buttons */
+  --muted: #6a6c6b;
+  --line: #dddcd8;
+  --lime: #d8f9b8;      /* accent fill */
+  --lime-ink: #3d6a12;  /* accent text on light */
+  --lime-deep: #9fdc5f;
+  --font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --r-lg: 28px; --r-md: 20px; --r-sm: 12px;
+  --wrap: 1200px;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 400 16px/1.6 var(--font); -webkit-font-smoothing: antialiased;
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+img { max-width: 100%; }
+a { color: inherit; }
+h1, h2, h3 { margin: 0; font-weight: 500; letter-spacing: -0.02em; text-wrap: balance; }
+p { margin: 0; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 6px; }
+
+.wrap {
+  max-width: calc(var(--wrap) + 2 * 32px); margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+@media (min-width: 700px) { .wrap { padding-left: max(32px, env(safe-area-inset-left, 0px)); padding-right: max(32px, env(safe-area-inset-right, 0px)); } }
+section { padding-block: clamp(64px, 9vw, 120px); }
+
+.tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--card); border-radius: 8px; padding: 4px 10px 4px 4px;
+  font-size: 13px; font-weight: 500; color: var(--ink);
+}
+.tag i { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 6px; background: var(--lime); font-style: normal; font: 600 11px/1 var(--mono); color: var(--lime-ink); }
+.h2 { font-size: clamp(32px, 4.4vw, 48px); line-height: 1.12; }
+.lede { color: var(--muted); font-size: 17px; max-width: 58ch; }
+.head { display: grid; gap: 18px; justify-items: start; margin-bottom: clamp(36px, 5vw, 56px); }
+.head.center { justify-items: center; text-align: center; }
+.mono { font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase; color: var(--muted); }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 10px; border: 0; cursor: pointer;
+  background: var(--ink); color: #fff; border-radius: 10px; padding: 13px 20px;
+  font: 500 15px/1 var(--font); text-decoration: none; transition: transform .15s ease, background .15s ease;
+}
+.btn:hover { transform: translateY(-1px); background: #1c1e1e; }
+.btn .arr { transition: transform .15s ease; }
+.btn:hover .arr { transform: translateX(3px); }
+.btn.light { background: var(--card); color: var(--ink); }
+.btn.light:hover { background: #f7f7f5; }
+
+/* Nav: dark pill, like the template */
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  padding-block: 18px; display: flex; justify-content: center;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.pill {
+  display: flex; align-items: center; gap: 4px; background: var(--ink); color: #fff;
+  border-radius: 14px; padding: 6px; box-shadow: 0 10px 30px -12px rgba(43,45,45,.45); max-width: 100%;
+}
+.logo { display: flex; align-items: center; gap: 9px; padding: 0 12px 0 4px; text-decoration: none; font-weight: 600; letter-spacing: -0.02em; font-size: 16px; }
+.logo b { display: grid; place-items: center; width: 30px; height: 30px; border-radius: 9px; background: var(--lime); color: var(--ink); font: 700 15px/1 var(--font); }
+.pill nav { display: flex; gap: 2px; }
+.pill nav a { padding: 8px 12px; border-radius: 9px; font-size: 14px; font-weight: 500; text-decoration: none; color: rgba(255,255,255,.86); white-space: nowrap; }
+.pill nav a:hover { background: rgba(255,255,255,.1); color: #fff; }
+.pill .btn { padding: 10px 14px; font-size: 14px; border-radius: 9px; white-space: nowrap; }
+.menu { display: none; background: transparent; border: 0; color: #fff; width: 40px; height: 40px; border-radius: 9px; cursor: pointer; }
+.menu:hover { background: rgba(255,255,255,.1); }
+.menu svg { display: block; margin: auto; }
+.drawer { display: none; }
+@media (max-width: 900px) {
+  .pill { width: 100%; justify-content: space-between; }
+  .pill nav { display: none; }
+  .menu { display: block; }
+  .drawer:not([hidden]) {
+    display: grid; gap: 2px; position: absolute; top: calc(100% - 8px);
+    left: max(16px, env(safe-area-inset-left, 0px)); right: max(16px, env(safe-area-inset-right, 0px));
+    background: var(--ink); border-radius: 14px; padding: 8px;
+  }
+  .drawer a { color: #fff; text-decoration: none; padding: 12px 14px; border-radius: 9px; font-weight: 500; }
+  .drawer a:hover { background: rgba(255,255,255,.1); }
+}
+@media (max-width: 460px) { .pill .btn { display: none; } }
+
+/* Hero */
+.hero { padding-block: clamp(40px, 7vw, 96px) 0; }
+.hero-top { display: grid; grid-template-columns: 1.3fr 1fr; gap: 32px 48px; align-items: end; }
+.hero h1 { font-size: clamp(44px, 7vw, 84px); line-height: 1.02; letter-spacing: -0.035em; margin-top: 22px; }
+.hero h1 span { display: block; }
+.hero h1 .dim { color: #9a9b98; }
+.hero-side { display: grid; gap: 22px; justify-items: start; padding-bottom: 10px; }
+.hero-side .lede { font-size: 18px; color: var(--ink); opacity: .78; }
+.lifecycle { display: flex; flex-wrap: wrap; gap: 8px; }
+.lifecycle span { font: 500 12px/1 var(--mono); text-transform: uppercase; letter-spacing: .04em; padding: 8px 10px; border-radius: 8px; background: var(--card); color: var(--muted); }
+@media (max-width: 860px) { .hero-top { grid-template-columns: 1fr; } }
+
+.stage { margin-top: clamp(40px, 6vw, 72px); background: var(--lime); border-radius: var(--r-lg); padding: clamp(14px, 3.2vw, 40px); }
+.app { background: var(--card); border-radius: var(--r-md); box-shadow: 0 30px 60px -30px rgba(61,106,18,.35); overflow: hidden; }
+.app-bar { display: flex; align-items: center; gap: 12px; padding: 14px 20px; border-bottom: 1px solid var(--line); font-size: 14px; flex-wrap: wrap; }
+.app-bar .crumb { color: var(--muted); }
+.app-bar .crumb b { color: var(--ink); font-weight: 500; }
+.app-bar .sample { margin-left: auto; font: 500 11px/1 var(--mono); text-transform: uppercase; letter-spacing: .05em; padding: 6px 8px; border-radius: 6px; background: var(--bg); color: var(--muted); }
+.app-body { display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 16px; padding: 20px; }
+.tile { border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.tile .k { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.tile .v { font-size: 28px; font-weight: 500; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.tile .v small { font-size: 14px; color: var(--muted); font-weight: 400; letter-spacing: 0; }
+.chip { font: 500 11px/1 var(--mono); padding: 6px 8px; border-radius: 6px; background: var(--lime); color: var(--lime-ink); white-space: nowrap; }
+.chip.grey { background: var(--bg); color: var(--muted); }
+.bars { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; align-items: end; height: 96px; }
+.bars i { display: block; border-radius: 5px 5px 2px 2px; background: repeating-linear-gradient(135deg, var(--lime) 0 6px, #e8fbd4 6px 12px); }
+.bars i.on { background: var(--lime-deep); outline: 2px solid var(--ink); outline-offset: 1px; }
+.axis { display: grid; grid-template-columns: repeat(12, 1fr); gap: 6px; font: 400 10px/1 var(--mono); color: var(--muted); text-align: center; }
+.meter { height: 8px; border-radius: 99px; background: var(--bg); overflow: hidden; }
+.meter b { display: block; height: 100%; border-radius: inherit; background: var(--ink); }
+.steps { display: grid; gap: 8px; }
+.steps div { display: flex; justify-content: space-between; gap: 10px; font-size: 14px; padding: 10px 12px; border-radius: 10px; background: var(--bg); }
+.steps div span:last-child { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.steps div.done { background: var(--lime); }
+.steps div.done span:last-child { color: var(--lime-ink); }
+.span2 { grid-column: 1 / -1; }
+@media (max-width: 900px) { .app-body { grid-template-columns: 1fr 1fr; } .tile.wide { grid-column: span 2; } }
+@media (max-width: 560px) { .app-body { grid-template-columns: 1fr; padding: 12px; } .tile.wide { grid-column: auto; } }
+
+/* Why TapFin: stats + solutions */
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+.stat { background: var(--card); border-radius: var(--r-md); padding: 26px 28px; display: grid; gap: 6px; }
+.stat strong { font-size: clamp(40px, 5vw, 60px); font-weight: 500; letter-spacing: -0.035em; line-height: 1; font-variant-numeric: tabular-nums; }
+.stat strong sup { color: var(--lime-ink); font-size: .5em; vertical-align: .55em; margin-left: 2px; }
+.built { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.built::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+@media (max-width: 760px) { .stats { grid-template-columns: 1fr; } }
+
+.solutions { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.sol { background: var(--panel); border-radius: var(--r-lg); padding: 32px; display: grid; grid-template-rows: auto auto 1fr; gap: 14px; min-width: 0; }
+.sol h3 { font-size: 26px; line-height: 1.2; }
+.sol > p { color: var(--muted); }
+.prods { display: grid; gap: 10px; align-content: end; margin-top: 12px; }
+.prod { background: var(--card); border-radius: 14px; padding: 16px 18px; display: grid; gap: 4px; }
+.prod b { font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.prod b::before { content: ""; width: 8px; height: 8px; border-radius: 3px; background: var(--lime-deep); }
+.prod span { color: var(--muted); font-size: 14.5px; line-height: 1.5; }
+@media (max-width: 960px) { .solutions { grid-template-columns: 1fr; } }
+
+/* About */
+.about { display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px 64px; align-items: start; }
+.about p.big { font-size: clamp(21px, 2.3vw, 28px); line-height: 1.4; letter-spacing: -0.015em; }
+.about p.big em { font-style: normal; background: linear-gradient(transparent 58%, var(--lime) 58%); }
+.about p.sub { margin-top: 20px; color: var(--muted); font-size: 17px; max-width: 54ch; }
+@media (max-width: 860px) { .about { grid-template-columns: 1fr; } }
+
+/* Why now */
+.whynow { background: var(--panel); border-radius: var(--r-lg); padding: clamp(24px, 4vw, 56px); display: grid; gap: 40px; }
+.whynow-top { display: grid; grid-template-columns: 1fr 1.15fr; gap: 32px 48px; align-items: center; }
+@media (max-width: 900px) { .whynow-top { grid-template-columns: 1fr; } }
+.journey { background: var(--card); border-radius: var(--r-md); padding: 20px; display: grid; gap: 14px; }
+.journey svg { width: 100%; height: auto; display: block; }
+.journey .cap { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.dpoints { display: flex; flex-wrap: wrap; gap: 8px; }
+.dpoints span { font: 500 12px/1 var(--mono); padding: 8px 10px; border-radius: 8px; background: var(--bg); color: var(--ink); }
+.dpoints span:nth-child(3n+1) { background: var(--lime); color: var(--lime-ink); }
+
+.silo-head { font-size: 20px; letter-spacing: -0.01em; }
+.silos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.silo { background: var(--card); border-radius: var(--r-md); padding: 22px; display: grid; gap: 8px; align-content: start; }
+.silo p { color: var(--muted); font-size: 15px; }
+@media (max-width: 760px) { .silos { grid-template-columns: 1fr; } }
+
+.turn { display: grid; grid-template-columns: 1fr 1.6fr; gap: 24px 48px; align-items: start; padding-top: 8px; border-top: 1px solid var(--line); }
+.turn > p { font-size: clamp(20px, 2vw, 24px); line-height: 1.4; letter-spacing: -0.01em; padding-top: 24px; }
+.outcomes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding-top: 24px; }
+.out { background: var(--ink); color: #fff; border-radius: var(--r-md); padding: 22px; display: grid; gap: 10px; align-content: start; }
+.out b { font-weight: 500; font-size: 18px; }
+.out p { color: rgba(255,255,255,.72); font-size: 14.5px; }
+.out .n { font: 500 11px/1 var(--mono); color: var(--lime); letter-spacing: .05em; text-transform: uppercase; }
+@media (max-width: 1000px) { .turn { grid-template-columns: 1fr; } .turn > p { padding-top: 24px; } .outcomes { padding-top: 0; } }
+@media (max-width: 680px) { .outcomes { grid-template-columns: 1fr; } }
+
+/* People */
+.founders { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.founder { background: var(--card); border-radius: var(--r-lg); padding: clamp(22px, 3vw, 36px); display: grid; grid-template-columns: 120px 1fr; gap: 24px; align-items: start; }
+.portrait {
+  width: 120px; aspect-ratio: 4 / 5; max-width: 100%; border-radius: 18px; background: var(--lime);
+  display: grid; place-items: center; font-size: 40px; font-weight: 500; letter-spacing: -0.03em; color: var(--lime-ink);
+}
+.founder h3, .member h3 { font-size: 22px; }
+.role { font: 500 12px/1.4 var(--mono); text-transform: uppercase; letter-spacing: .04em; color: var(--lime-ink); margin-top: 6px; }
+.founder p.bio, .member p.bio { color: var(--muted); margin-top: 14px; font-size: 15.5px; }
+.edu { margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 14px; display: grid; gap: 2px; }
+.edu span { font: 500 11px/1 var(--mono); text-transform: uppercase; letter-spacing: .05em; color: var(--muted); }
+@media (max-width: 960px) { .founders { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .founder { grid-template-columns: 1fr; } .portrait { width: 96px; font-size: 32px; } }
+
+.team-title { margin: clamp(48px, 6vw, 72px) 0 20px; display: flex; align-items: center; gap: 12px; }
+.team-title::after { content: ""; flex: 1; height: 1px; background: var(--line); }
+.team { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.member { background: var(--panel); border-radius: var(--r-lg); padding: 26px; display: flex; flex-direction: column; min-width: 0; }
+.member .top { display: flex; gap: 14px; align-items: center; }
+.avatar { flex: none; width: 56px; height: 56px; border-radius: 14px; background: var(--card); display: grid; place-items: center; font-weight: 500; color: var(--ink); }
+.member .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 18px; }
+.member .tags span { font-size: 12.5px; padding: 5px 9px; border-radius: 7px; background: var(--card); }
+@media (max-width: 960px) { .team { grid-template-columns: 1fr; } }
+
+/* CTA */
+.cta { background: var(--ink); color: #fff; border-radius: var(--r-lg); padding: clamp(24px, 4.5vw, 64px); display: grid; grid-template-columns: 1fr 1.2fr; gap: 40px 64px; }
+.cta .h2 { color: #fff; }
+.cta .lede { color: rgba(255,255,255,.7); margin-top: 16px; }
+.contact { display: grid; gap: 10px; margin-top: 32px; }
+.contact div { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; background: rgba(255,255,255,.07); border-radius: 12px; padding: 14px 16px; }
+.contact .mono { color: rgba(255,255,255,.55); }
+.contact a { color: #fff; text-decoration: none; font-weight: 500; user-select: all; }
+.contact a:hover { text-decoration: underline; text-underline-offset: 3px; }
+form { background: var(--card); color: var(--ink); border-radius: var(--r-md); padding: clamp(20px, 3vw, 32px); display: grid; grid-template-columns: 1fr 1fr; gap: 14px; align-content: start; }
+form h3 { grid-column: 1 / -1; font-size: 22px; }
+.field { display: grid; gap: 6px; min-width: 0; }
+.field.full { grid-column: 1 / -1; }
+label { font-size: 13px; font-weight: 500; }
+input, select {
+  width: 100%; font: 400 15px/1.3 var(--font); color: var(--ink);
+  background: var(--bg); border: 1px solid transparent; border-radius: 10px; padding: 12px 14px;
+  transition: border-color .15s ease, background .15s ease;
+}
+select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%); background-position: calc(100% - 20px) 52%, calc(100% - 15px) 52%; background-size: 5px 5px; background-repeat: no-repeat; padding-right: 36px; }
+input:hover, select:hover { border-color: var(--line); }
+input:focus, select:focus { outline: none; border-color: var(--ink); background: #fff; }
+input:user-invalid { border-color: #c2410c; }
+form .btn { grid-column: 1 / -1; justify-content: center; padding: 15px; margin-top: 4px; }
+.note { grid-column: 1 / -1; font-size: 14px; border-radius: 10px; padding: 12px 14px; background: var(--lime); color: var(--lime-ink); }
+@media (max-width: 900px) { .cta { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { form { grid-template-columns: 1fr; } }
+
+footer { padding-block: 48px 40px; }
+.foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 20px; align-items: center; color: var(--muted); font-size: 14px; }
+.foot nav { display: flex; flex-wrap: wrap; gap: 18px; }
+.foot nav a { text-decoration: none; }
+.foot nav a:hover { color: var(--ink); }
+.foot .logo { color: var(--ink); padding: 0; }
+
+/* Gentle entrance from a visible resting state */
+@keyframes rise { from { transform: translateY(14px); } to { transform: none; } }
+.hero-top, .stage { animation: rise .7s cubic-bezier(.2,.7,.2,1) both; }
+.stage { animation-delay: .08s; }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="pill">
+    <a class="logo" href="#top" aria-label="TapFin home"><b>T</b>TapFin</a>
+    <nav aria-label="Main">
+      <a href="#finance">Finance</a>
+      <a href="#analytics">Data Analytics</a>
+      <a href="#why">Why TapFin</a>
+      <a href="#insights">Insights</a>
+      <a href="#login">Login</a>
+    </nav>
+    <a class="btn light" href="#contact">Request a Demo</a>
+    <button class="menu" id="menuBtn" type="button" aria-expanded="false" aria-controls="drawer" aria-label="Open menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 6h14M3 14h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div class="drawer" id="drawer" hidden>
+    <a href="#finance">Finance</a>
+    <a href="#analytics">Data Analytics</a>
+    <a href="#why">Why TapFin</a>
+    <a href="#insights">Insights</a>
+    <a href="#login">Login</a>
+    <a href="#contact">Request a Demo</a>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- Section 1: What TapFin is -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-top">
+      <div>
+        <span class="tag"><i>EV</i>Asset lifecycle platform</span>
+        <h1><span>Finance.</span><span class="dim">Analyse.</span><span>Resale.</span></h1>
+      </div>
+      <div class="hero-side">
+        <p class="lede">One ecosystem for the entire asset lifecycle - every OEM, IoT, form factor, fuel technology and geography.</p>
+        <a class="btn" href="#contact">Request a demo <span class="arr" aria-hidden="true">→</span></a>
+        <div class="lifecycle" aria-label="Coverage"><span>Every OEM</span><span>IoT</span><span>Form factor</span><span>Fuel tech</span><span>Geography</span></div>
+      </div>
+    </div>
+
+    <div class="stage" aria-label="Illustration of the TapFin asset dashboard">
+      <div class="app">
+        <div class="app-bar">
+          <span class="crumb">Portfolio › <b>Asset intelligence</b></span>
+          <span class="sample">Illustrative view</span>
+        </div>
+        <div class="app-body">
+          <div class="tile wide">
+            <div class="k"><span class="mono">Kilometres analysed · monthly</span><span class="chip">Live</span></div>
+            <div class="bars" aria-hidden="true">
+              <i style="height:42%"></i><i style="height:55%"></i><i style="height:48%"></i><i style="height:63%"></i><i style="height:58%"></i><i style="height:71%"></i><i class="on" style="height:88%"></i><i style="height:66%"></i><i style="height:74%"></i><i style="height:69%"></i><i style="height:80%"></i><i style="height:77%"></i>
+            </div>
+            <div class="axis" aria-hidden="true"><span>J</span><span>F</span><span>M</span><span>A</span><span>M</span><span>J</span><span>J</span><span>A</span><span>S</span><span>O</span><span>N</span><span>D</span></div>
+          </div>
+          <div class="tile">
+            <div class="k"><span class="mono">Battery health</span><span class="chip">Good</span></div>
+            <div class="v">94<small> %</small></div>
+            <div class="meter"><b style="width:94%"></b></div>
+            <div class="k"><span class="mono">Utilisation</span><span class="mono">82%</span></div>
+            <div class="meter"><b style="width:82%"></b></div>
+          </div>
+          <div class="tile">
+            <div class="k"><span class="mono">Risk signal</span><span class="chip grey">Monitored</span></div>
+            <div class="v">Low</div>
+            <p class="mono" style="text-transform:none;letter-spacing:0">Driving behaviour, trip completion and charging pattern within range.</p>
+          </div>
+          <div class="tile span2">
+            <div class="k"><span class="mono">Lifecycle</span><span class="mono">One asset, one record</span></div>
+            <div class="steps">
+              <div class="done"><span>Finance · underwriting</span><span>Done</span></div>
+              <div class="done"><span>Intelligence · monitoring</span><span>Active</span></div>
+              <div><span>Resale · usage-backed valuation</span><span>Ready</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Section 2: Why TapFin? (What we do) -->
+<section id="why">
+  <div class="wrap">
+    <div class="head center">
+      <span class="tag"><i>01</i>Why TapFin?</span>
+      <h2 class="h2">Deep asset intelligence.<br>Smarter decisions at every stage</h2>
+    </div>
+
+    <div class="built"><span class="mono">Built on</span></div>
+    <div class="stats">
+      <div class="stat"><strong data-count="1.91" data-dec="2" data-suffix="B">1.91B<sup>+</sup></strong><span class="mono">Data points processed</span></div>
+      <div class="stat"><strong data-count="42.2" data-dec="1" data-suffix="M">42.2M<sup>+</sup></strong><span class="mono">Kilometres analysed</span></div>
+      <div class="stat"><strong data-count="10" data-dec="0" data-suffix="">10<sup>+</sup></strong><span class="mono">Lender partners</span></div>
+    </div>
+
+    <div class="solutions">
+      <article class="sol" id="finance">
+        <span class="mono">Finance</span>
+        <h3>Smarter financing, powered by asset intelligence.</h3>
+        <div class="prods">
+          <div class="prod"><b>GoGreen Capital</b><span>Data-backed in-house NBFC</span></div>
+          <div class="prod"><b>Tap Fintech</b><span>End-to-end loan application processing with 10+ Lending Partners</span></div>
+        </div>
+      </article>
+      <article class="sol" id="analytics">
+        <span class="mono">Intelligence</span>
+        <h3>Usage-based intelligence for performance and risk decisions.</h3>
+        <div class="prods">
+          <div class="prod"><b>TRUST</b><span>Data-based decisions across underwriting, monitoring, collections &amp; resale</span></div>
+          <div class="prod"><b>FleetForce</b><span>Operational intelligence across behaviour, utilisation, profitability &amp; lifecycle</span></div>
+        </div>
+      </article>
+      <article class="sol" id="resale">
+        <span class="mono">Resale Marketplace</span>
+        <h3>Unlock the right value of every asset.</h3>
+        <div class="prods">
+          <div class="prod"><b>TapFin Xchange</b><span>Usage-backed resale valuation for pre-owned EVs</span></div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Section 3: Who we are -->
+<section id="about" style="padding-top:0">
+  <div class="wrap">
+    <div class="about">
+      <div class="head" style="margin:0">
+        <span class="tag"><i>02</i>About Us</span>
+        <h2 class="h2">Who we are</h2>
+      </div>
+      <div>
+        <p class="big">TapFin is building what we believe the sustainability ecosystem has been missing - <em>a unified layer that sits at the intersection of financing, asset intelligence and resale</em> across the entire lifecycle.</p>
+        <p class="sub">Built by people who understand assets from the ground up, we combine real-world operations, data and AI to turn asset data into informed decisions.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="insights" style="padding-top:0">
+  <div class="wrap">
+    <div class="whynow">
+      <div class="whynow-top">
+        <div class="head" style="margin:0">
+          <span class="tag"><i>03</i>Why now?</span>
+          <h2 class="h2">EVs are not just vehicles. They are connected, data-rich assets.</h2>
+        </div>
+        <figure class="journey" style="margin:0">
+          <div class="cap"><span class="mono">One EV journey</span><span class="chip">Millions of data points</span></div>
+          <svg viewBox="0 0 520 150" role="img" aria-label="A route line from start to destination with data captured along the way">
+            <path d="M20 118 C 90 118, 100 40, 180 46 S 280 128, 350 98 S 450 24, 500 32" fill="none" stroke="#dddcd8" stroke-width="10" stroke-linecap="round"/>
+            <path class="route" d="M20 118 C 90 118, 100 40, 180 46 S 280 128, 350 98 S 450 24, 500 32" fill="none" stroke="#2b2d2d" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="6 8"/>
+            <circle cx="20" cy="118" r="9" fill="#2b2d2d"/><circle cx="20" cy="118" r="3.5" fill="#d8f9b8"/>
+            <circle cx="180" cy="46" r="6" fill="#9fdc5f" stroke="#2b2d2d" stroke-width="2"/>
+            <circle cx="350" cy="98" r="6" fill="#9fdc5f" stroke="#2b2d2d" stroke-width="2"/>
+            <circle cx="500" cy="32" r="9" fill="#9fdc5f" stroke="#2b2d2d" stroke-width="2.5"/>
+            <text x="20" y="144" font-family="IBM Plex Mono, monospace" font-size="11" fill="#6a6c6b">START</text>
+            <text x="486" y="16" font-family="IBM Plex Mono, monospace" font-size="11" fill="#6a6c6b" text-anchor="end">TRIP COMPLETE</text>
+          </svg>
+          <div class="dpoints">
+            <span>GPS</span><span>Mileage</span><span>Battery health</span><span>Utilisation</span><span>Charging pattern</span><span>Driving behaviour</span><span>Trip completion</span><span>Revenue</span>
+          </div>
+        </figure>
+      </div>
+
+      <div>
+        <p class="silo-head" style="margin-bottom:16px">Yet decisions across the asset lifecycle are still often made in silos:</p>
+        <div class="silos">
+          <div class="silo"><span class="mono">Financing</span><p>Bureau and borrower creditworthiness</p></div>
+          <div class="silo"><span class="mono">Intelligence</span><p>Mileage, GPS and trip completion</p></div>
+          <div class="silo"><span class="mono">Resale</span><p>No. of ownerships and asset age</p></div>
+        </div>
+      </div>
+
+      <div class="turn">
+        <p>TapFin's AI algorithms turn continuously generated asset data into AI-enabled actionable intelligence across the lifecycle.</p>
+        <div class="outcomes">
+          <div class="out"><span class="n">Finance</span><b>Finance with confidence</b><p>Informed underwriting, risk and collections intelligence for lenders</p></div>
+          <div class="out"><span class="n">Intelligence</span><b>Monitor with early risk signals</b><p>Mitigate operational loopholes and optimise performance.</p></div>
+          <div class="out"><span class="n">Resale</span><b>Usage-based resale</b><p>Transparent and utilisation-based pricing</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="people" style="padding-top:0">
+  <div class="wrap">
+    <div class="head">
+      <span class="tag"><i>04</i>The People Behind TapFin</span>
+      <h2 class="h2">Founders</h2>
+    </div>
+    <div class="founders">
+      <article class="founder">
+        <div class="portrait" aria-hidden="true">AS</div>
+        <div>
+          <h3>Aditya Singh</h3>
+          <p class="role">Co-Founder &amp; CEO, TapFin</p>
+          <p class="bio">A fintech and mobility technology entrepreneur with 20+ years across EVs, financing, technology and financial services, Aditya co-founded and scaled CreditMate for 5 years, before its acquisition by Paytm.</p>
+          <p class="edu"><span>Education</span>MBA, XLRI Jamshedpur | IT, Delhi University</p>
+        </div>
+      </article>
+      <article class="founder">
+        <div class="portrait" aria-hidden="true">TB</div>
+        <div>
+          <h3>Terniza Berry</h3>
+          <p class="role">Co-Founder &amp; COO, TapFin</p>
+          <p class="bio">A banking and fintech leader with 20+ years across SME and retail banking, supply chain financing, and regulatory compliance, Terniza spent 16+ years at HSBC, including as Interim COO of Wholesale Banking, before moving into electric mobility as COO of MoEVing Fintech.</p>
+          <p class="edu"><span>Education</span>MBA, XLRI Jamshedpur | CBS Delhi</p>
+        </div>
+      </article>
+    </div>
+
+    <div class="team-title"><span class="mono">The Team</span></div>
+    <div class="team">
+      <article class="member">
+        <div class="top"><div class="avatar" aria-hidden="true">NS</div><div><h3>Nikhil Saigal</h3><p class="role">Chief Business Officer</p></div></div>
+        <p class="bio">Nikhil Saigal is a business leader with nearly two decades of experience across payments, fintech, partnerships and commercial growth. He spent close to nine years at Paytm, rising to Vice President, Business and also Flipkart.</p>
+        <p class="edu"><span>Education</span>International Management Institute (IMI)</p>
+        <div class="tags" aria-label="Expertise"><span>Fintech &amp; Payments</span><span>Business Growth</span><span>Strategic Partnerships</span><span>EV Financing</span><span>Mobility &amp; Asset Intelligence</span></div>
+      </article>
+      <article class="member">
+        <div class="top"><div class="avatar" aria-hidden="true">SS</div><div><h3>Samir Sahu</h3><p class="role">Chief Technology Officer</p></div></div>
+        <p class="bio">Samir Sahu is a technology leader with 15+ years of experience across lending technology, data analytics and software engineering. He has held technology leadership roles at Arthimpact Finserve and ADH Deutschland, along with experience building scalable software products across sectors.</p>
+        <div class="tags" aria-label="Expertise"><span>AI &amp; Data</span><span>OEM/IoT integrations</span><span>Asset intelligence</span><span>Risk monitoring</span><span>Scalable lending technology</span></div>
+      </article>
+      <article class="member">
+        <div class="top"><div class="avatar" aria-hidden="true">CK</div><div><h3>Charu Kapur</h3><p class="role">Chief Financial Officer</p></div></div>
+        <p class="bio">Charu Kapur is a finance leader with 20+ years of experience across financial services, capital raising and business strategy. She has held senior finance roles at Netafim Agricultural Financing Agency, Samunnati Financial Services and National Bulk Handling Corporation, with deep experience across fundraising, treasury and corporate finance.</p>
+        <div class="tags" aria-label="Expertise"><span>NBFC Finance &amp; Capital Raising</span><span>Treasury &amp; Lender Relationships</span><span>Corporate Finance</span><span>Portfolio Risk</span><span>Financial Planning</span><span>EV &amp; Sustainable Finance</span></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- Section 4: CTA -->
+<section id="contact" style="padding-top:0">
+  <div class="wrap">
+    <div class="cta">
+      <div>
+        <span class="mono" style="color:var(--lime)">Request a demo</span>
+        <h2 class="h2" style="margin-top:14px">Get a callback</h2>
+        <p class="lede">Tell us about your portfolio and which solution you are exploring. Our team will reach out.</p>
+        <div class="contact">
+          <div><span class="mono">Mobile</span><a href="tel:+918069645301">+91 80696 45301</a></div>
+          <div><span class="mono">Email</span><a href="mailto:contact@tapfin.in">contact@tapfin.in</a></div>
+        </div>
+      </div>
+      <!-- To go live: set data-endpoint to your form handler URL (it receives a JSON POST). -->
+      <form id="callback" data-endpoint="" novalidate>
+        <h3>Speak with our team</h3>
+        <div class="field"><label for="f-name">Full name</label><input id="f-name" name="name" autocomplete="name" required></div>
+        <div class="field"><label for="f-email">Work email</label><input id="f-email" name="email" type="email" autocomplete="email" required></div>
+        <div class="field"><label for="f-company">Company</label><input id="f-company" name="company" autocomplete="organization" required></div>
+        <div class="field"><label for="f-phone">Phone number</label><input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required></div>
+        <div class="field full">
+          <label for="f-solution">Select a solution</label>
+          <select id="f-solution" name="solution" required>
+            <option value="">Choose one</option>
+            <optgroup label="Finance"><option>GoGreen Capital</option><option>Tap Fintech</option></optgroup>
+            <optgroup label="Intelligence"><option>TRUST</option><option>FleetForce</option></optgroup>
+            <optgroup label="Resale Marketplace"><option>TapFin Xchange</option></optgroup>
+          </select>
+        </div>
+        <button class="btn" type="submit">Speak with our team <span class="arr" aria-hidden="true">→</span></button>
+        <p class="note" id="formNote" hidden role="status"></p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="logo" href="#top"><b>T</b>TapFin</a>
+    <nav aria-label="Footer">
+      <a href="#finance">Finance</a><a href="#analytics">Data Analytics</a><a href="#why">Why TapFin</a><a href="#insights">Insights</a><a href="#contact">Contact</a>
+    </nav>
+    <span>contact@tapfin.in · +91 80696 45301</span>
+  </div>
+</footer>
+
+<script>
+// Mobile menu
+const menuBtn = document.getElementById("menuBtn"), drawer = document.getElementById("drawer")
+menuBtn.addEventListener("click", () => {
+  const open = drawer.hidden
+  drawer.hidden = !open
+  menuBtn.setAttribute("aria-expanded", String(open))
+})
+drawer.addEventListener("click", (e) => { if (e.target.closest("a")) { drawer.hidden = true; menuBtn.setAttribute("aria-expanded", "false") } })
+
+// Count the stats up once they scroll into view; the final values are already in the markup.
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches
+if (!reduce && "IntersectionObserver" in window) {
+  const io = new IntersectionObserver((entries) => entries.forEach((en) => {
+    if (!en.isIntersecting) return
+    io.unobserve(en.target)
+    const el = en.target, end = +el.dataset.count, dec = +el.dataset.dec, suf = el.dataset.suffix, t0 = performance.now()
+    const tick = (t) => {
+      const p = Math.min(1, (t - t0) / 1400), v = end * (1 - Math.pow(1 - p, 3))
+      el.innerHTML = v.toFixed(dec) + suf + "<sup>+</sup>"
+      if (p < 1) requestAnimationFrame(tick)
+    }
+    requestAnimationFrame(tick)
+  }), { threshold: 0.6 })
+  document.querySelectorAll("[data-count]").forEach((el) => io.observe(el))
+}
+
+// Callback form
+const form = document.getElementById("callback"), note = document.getElementById("formNote")
+form.addEventListener("submit", async (e) => {
+  e.preventDefault()
+  if (!form.checkValidity()) {
+    note.hidden = false
+    note.textContent = "Please fill in every field, including a valid work email."
+    form.querySelector(":invalid")?.focus()
+    return
+  }
+  const data = Object.fromEntries(new FormData(form))
+  const endpoint = form.dataset.endpoint
+  note.hidden = false
+  if (!endpoint) {
+    note.textContent = `Thanks, ${data.name.split(" ")[0]}. This preview doesn't send requests yet. Please email contact@tapfin.in or call +91 80696 45301.`
+    return
+  }
+  try {
+    const r = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) })
+    if (!r.ok) throw new Error(r.status)
+    form.reset()
+    note.textContent = `Thanks, ${data.name.split(" ")[0]}. Our team will call you back shortly.`
+  } catch {
+    note.textContent = "We couldn't send that. Please try again, or email contact@tapfin.in."
+  }
+})
+</script>
+</body>
+</html>
